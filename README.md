@@ -1,11 +1,5 @@
 # Pillar Centroid Tracker (version 1.0.4)
-
-
-## Badges
-
-
-## Visuals
-
+(note: in September 2024 this repo was copied from https://eng-git.canterbury.ac.nz/hbi34/pillar-centroid-tracker)
 
 ## Description:
 
