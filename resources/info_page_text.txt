@@ -1,0 +1,96 @@
+[size=52]Info Page[/size]
+
+[size=32]Application Description[/size]
+This application provides semi-automated tracking of an elastomeric pillar across 
+a sequence of images. The verified position data can then be used to calculate 
+force values. The produced data can then be visualised as plots. This application 
+is to be used alongside the elastomeric micropillar platform as described in: [size=10]
+
+[/size]Tayagui et al., "An elastomeric micropillar platform for the study of protrusive 
+forces in hyphal invasion", Lab on a Chip, Vol. 17, No.21, pp. 3643-3653, 2017.
+
+
+[size=32]Track Pillar Position[/size]
+1. select folders containing image sequences (or drag and drop)
+   - the images are read in alphabetical order
+   - the channel must be orientated vertically in the images
+2. the app predicts the pillar position in the first frame
+3. the user verifies the predicted position
+    [see below for keyboard/mouse controls]
+4. the app tracks the position across the sequence of images
+(position files (.csv) are exported to the same directory as the images)
+
+
+[size=32]Verify Predicted Positions[/size]
+1. select folders containing image sequences (or drag and drop)
+2. select associated position file for each (or drag and drop)
+    - files can be in .csv or .xml format
+    - this can be adjusted at the bottom right of the file select window
+3. the user verifies the positions
+    [see below for keyboard/mouse controls]
+
+
+[size=32]Calculate Forces[/size]
+1. select a position file (or drag and drop)
+    - files can be in .csv or .xml format
+    - this can be adjusted at the bottom right of the file select window
+2. select the x and y pixel position columns
+3. adjust parameters needed for force calculation
+    [see below for parameters]
+(force files (.csv) are exported to the same directory as the position file)
+
+
+[size=32]Generate Plots[/size]
+1. select a force file (or drag and drop)
+    - files can be in .csv or .xml format
+    - this can be adjusted at the bottom right of the file select window
+2. select each column from the file, and press continue
+3. use the arrows to preview the 8 graphs available
+4. adjust titles, plot types, and the y-axis range for each plot
+5. select the file types and plots to be exported
+(plot files (.svg/.png) are exported to a sub-directory alongside the force file)
+
+
+[size=32]Keyboard Controls[/size]
+Z  -  zoom into circle
+X  -  hide centre cross
+C  -  hide circle
+A  -  toggle axis overlay
+S  -  save current image    (.png file is exported to a sub-directory)
+D  -  toggle auto-contrast
+F  -  toggle bulk position adjustment of all following frames
+←/↓/↑/→  -  move circle
+Ctrl + ←/→  -  change frame
+Ctrl + ↓/↑  -  change job
+
+
+[size=32]Mouse Controls[/size]
+Left Mouse  -  move circle
+Scroll Up  -  increase circle radius
+Scroll Down  -  decrease circle radius
+
+
+[size=32]Force Calculation Parameters[/size]
+Pillar Diameter
+  -  The diameter of the micropillar
+  -  Defaults of 7.3 µm and 5.4 µm
+Pillar Height
+  -  The height of the micropillar
+  -  Default of 11.1 µm
+Pillar Contact
+  -  The height of contact on the micropillar
+  -  Default of 5.55 µm (half way up the pillar)
+Pixel Micron Ratio
+  -  The number of pixels per micron in the data
+  -  Calculate with: [number of pixels] / [distance in microns]
+  -  Default of 10 pixels per micron
+Young's Modulus (Default of 1.47)
+  -  A value describing the material properties of the pillar
+  -  Default of 5.55 (Young's Modulus of PDMS)
+Poisson's Ratio (Default of 0.5)
+  -  A value describing the material properties of the pillar
+  -  Default of 0.5 (Poisson's Ratio of PDMS)
+Frame Frequency
+  -  The number of frames per second in the data
+  -  Calculate with: [number of frames] / [number of seconds]
+  -  Default of 0.13 fps

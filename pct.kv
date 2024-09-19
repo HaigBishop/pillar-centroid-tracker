@@ -1,0 +1,3511 @@
+#:kivy 2.2.0
+# App: Pillar Centroid Tracker
+# Author: Haig Bishop
+
+#:set GREY (64/255, 65/255, 79/255, 1)
+#:set LIGHT_GREY (128/255, 130/255, 158/255, 1)
+#:set DARK_GREY (32/255, 33/255, 35/255, 1)
+#:set GREY_BLUE (60/255, 77/255, 109/255, 1)
+#:set BLUE_GREY_BLUE (75/255, 100/255, 153/255, 1)
+#:set BLUE (96/255, 145/255, 246/255, 1)
+#:set CLEAR (0, 0, 0, 0)
+#:set WHITE (1,1,1,1)
+
+
+# =========================================================================================
+
+WindowManager:
+    ip2_window: ip2_window
+    ps2_window: ps2_window
+    MainWindow:
+    IP1Window:
+    IP2Window:
+        id: ip2_window
+    PS1Window:
+    PS2Window:
+        id: ps2_window
+    PF1Window:
+    FG1Window:
+    FG2Window:
+
+
+
+
+
+
+
+
+
+# =========================================================================================
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# =========================================================================================
+
+<MainWindow>:
+    name: 'main'
+    info_layout: info_layout
+    main_grid: main_grid
+    scroll: scroll
+    # Main split
+    GridLayout:
+        id: main_grid
+        rows: 2
+        # Title / (i) split
+        GridLayout:
+            id: top_grid
+            orientation: 'rl-tb'
+            size_hint_y: None
+            height: '93dp'
+            cols: 2
+            FloatLayout:
+                size_hint: None, None
+                size: top_grid.height, top_grid.height
+                # Info button
+                Button:
+                    id: info_button
+                    background_color: 0, 0, 0, 0
+                    background_normal: ''
+                    background_down: ''
+                    color: 1, 1, 1, 1
+                    font_size: '20dp'
+                    text: '[b]i[/b]'
+                    markup: True
+                    size_hint_y: None
+                    size_hint_x: None
+                    pos: (top_grid.x + top_grid.width - self.width - dp(13), top_grid.y + top_grid.height - self.height- dp(13))
+                    size: ('33dp', '33dp')
+                    on_press: root.toggle_info()
+                    canvas.before:
+                        Color:
+                            rgba: main_grid.disabled and (98/255, 99/255, 101/255, 1) or (1, 1, 1, 1)
+                        Line:
+                            width: dp(0.7)
+                            circle:
+                                (self.center_x, self.center_y, self.width/2, 0, 360)
+            # Title / subtitle split
+            GridLayout:
+                rows: 2
+                size_hint_y: 1
+                size_hint_x: None
+                width: main_grid.width - self.height
+                FloatLayout:
+                    size_hint_y: 0.6
+                    size_hint_x: 1
+                    # Title
+                    Label:
+                        id: title_label
+                        text: 'Pillar Centroid Tracker'
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_size: '43dp'
+                        padding: ['13dp', 0]
+                        size_hint: None, None
+                        size: self.texture_size
+                        valign: 'bottom'
+                        halign: 'left'
+                        pos_hint: {'x': 0, 'y': 0}
+                    # version
+                    Label:
+                        text: 'v1.0'
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_size: '24dp'
+                        padding: ['7dp', 0]
+                        size_hint: None, None
+                        size: self.texture_size
+                        valign: 'bottom'
+                        halign: 'left'
+                        pos_hint: {'y': 0.1}
+                        x: title_label.x + title_label.width
+                # Subtitle
+                Label:
+                    text: ' Haig Bishop,  hbi34@uclive.ac.nz,  University of Canterbury'
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_size: '12dp'
+                    padding: ['13dp', 0]
+                    size_hint_x: 1
+                    size_hint_y: 0.35
+                    halign: 'left'
+                    valign: 'center'
+                    text_size: self.size
+        # Options / image split
+        GridLayout:
+            size_hint_y: 1
+            cols: 3
+            FloatLayout:
+                size_hint_x: None
+                width: '13dp'
+            # Options x 4
+            GridLayout:
+                rows: 4
+                size_hint_x: 0.7
+                # Button wrapper
+                FloatLayout:
+                    size_hint_y: 0.25
+                    BlueButton:
+                        id: btn_ip
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        text: 'Track Pillar Position' # 'Images → Position'
+                        font_size: '35dp'
+                        size_hint: (1, 0.9)
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        pos_hint: {'right': 1, 'top':1}
+                        on_release: 
+                            app.root.current = 'IP1'
+                            root.manager.transition.direction = 'left'
+                FloatLayout:
+                    size_hint_y: 0.25
+                    BlueButton:
+                        id: btn_ps
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_size: '35dp'
+                        text: 'Verify Predicted Positions' # 'Screen Positions'
+                        size_hint: (1, 0.9)
+                        pos_hint: {'right': 1, 'top':1}
+                        on_release: 
+                            app.root.current = 'PS1'
+                            root.manager.transition.direction = 'left'
+                FloatLayout:
+                    size_hint_y: 0.25
+                    BlueButton:
+                        id: btn_pf
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        text: 'Calculate Forces' # 'Position → Force'
+                        font_size: '35dp'
+                        size_hint: (1, 0.9)
+                        pos_hint: {'right': 1, 'top':1}
+                        on_release: 
+                            app.root.current = 'PF1'
+                            root.manager.transition.direction = 'left'
+                FloatLayout:
+                    size_hint_y: 0.25
+                    BlueButton:
+                        id: btn_fg
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_size: '35dp'
+                        text: 'Generate Plots' # 'Force → Plots'
+                        size_hint: (1, 0.9)
+                        pos_hint: {'right': 1, 'top':1}
+                        on_release: 
+                            app.root.current = 'FG1'
+                            root.manager.transition.direction = 'left'
+            # Image container
+            FloatLayout:
+                size_hint_x: 0.3
+                Image:
+                    size_hint: (0.9, 0.975)
+                    pos_hint: {'center_x':0.5, 'top':1}
+                    fit_mode: 'cover'
+                    source: root.app.resource_path('resources\\example_image.png')
+    # Whole screen float for the info screen
+    FloatLayout:
+        id: info_layout
+        disabled: True
+        opacity: 0 if self.disabled else 1
+        pos: (69420, 69420)
+        Button:
+            background_color: 0, 0, 0, 0
+            pos_hint: {'center_x':0.5, 'center_y':0.5}
+            size_hint: 1, 1
+            on_press: root.toggle_info()
+        FloatLayout:
+            id: info_sublayout
+            pos_hint: {'center_x':0.5, 'center_y':0.5}
+            size_hint: 0.9, 0.9
+            canvas.before:
+                Color:
+                    rgba: DARK_GREY
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+                Color:
+                    rgba: WHITE
+                Line:
+                    width: dp(0.7)
+                    rectangle: (self.x, self.y, self.width, self.height)
+            ScrollView:
+                id: scroll
+                pos: (info_sublayout.x + dp(12), info_sublayout.y)
+                size_hint: None, None
+                size: (info_sublayout.width - dp(12), info_sublayout.height - dp(8))
+                bar_pos_y: 'right'
+                do_scroll_x: False
+                do_scroll_y: True
+                GridLayout:
+                    id: grid
+                    size_hint: None, None
+                    width: scroll.width
+                    height: max(self.minimum_height, scroll.height)
+                    cols: 1
+                    spacing: '3dp'
+                    Label:
+                        size_hint: None, None
+                        size: self.texture_size
+                        text: root.info_text
+                        color: WHITE
+                        padding: ['20dp', '20dp']
+                        markup: True
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_size: '16dp'
+
+
+
+
+
+
+
+
+
+
+# =========================================================================================
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# =========================================================================================
+
+<IP1Window>:
+    name: 'IP1'
+    id: ip1_window
+    ip1_scroll: ip1_scroll
+    select_btn: select_btn
+    location_label: location_label
+    param_grid_layout: param_grid_layout
+    name_grid_layout: name_grid_layout
+    name_input: name_input
+    loading_layout: loading_layout
+    GridLayout:
+        canvas:
+            Color:
+                rgba: 1,1,1,0.1
+            Line:
+                points: [0, self.height - dp(40), self.width, self.height - dp(40)]
+                width: dp(0.3)
+            Line:
+                points: [self.width * 0.75, self.height, self.width * 0.75, 0]
+                width: dp(0.3)
+            Color:
+                rgba: (42/255, 42/255, 45/255, 1)
+            Rectangle:
+                pos: (0,0)
+                size: (self.width * 0.75, (self.height-80) * 0.79)
+        cols: 3
+        GridLayout:
+            rows: 2
+            size_hint_x: 0.74
+            GridLayout:
+                cols: 3
+                size_hint_y: None
+                height: '40dp'
+                BlankButton:
+                    text:'←'
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_size: '35dp'
+                    padding: [0, '13dp']
+                    size_hint_x: None
+                    width: '80dp'
+                    on_release: 
+                        root.on_back_btn()
+                Label:
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    text: 'Images → Positions (detect start point)'
+                    font_size: '20dp'
+                    padding: ['3dp', '2dp']
+                    size_hint_x: None
+                    width: '467dp'
+                    halign: 'left'
+                    valign: 'center'
+                    text_size: self.size
+                FloatLayout:
+                    size_hint_x: 1
+            GridLayout:
+                rows: 2
+                size_hint_y: 1
+                FloatLayout:
+                    size_hint_y: 0.2
+                    BlueButton:
+                        id: select_btn
+                        size_hint:(None,None)
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        size: ('107dp', '33dp')
+                        font_size: '12dp'
+                        pos_hint: {'x':.095, 'y':.3}
+                        text:'select folder(s)'
+                        on_release: root.select_folder()
+                    Label:
+                        id: location_label
+                        color: WHITE
+                        size_hint:(None,None)
+                        size: (self.parent.width * 0.8, '27dp')
+                        pos_hint: {'x':.095, 'y':0.06}
+                        text: 'No folder(s) selected'
+                        halign: 'left'
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        text_size: self.size
+                        shorten: True
+                        font_size: '11dp'
+                    GridLayout:
+                        id: name_grid_layout
+                        disabled: True
+                        cols: 2
+                        size_hint:(.64, 1)
+                        pos_hint: {'x':.36, 'y':0}
+                        Label:
+                            text: 'Job Name:'
+                            color: WHITE
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '16dp'
+                            size_hint_x: 0.35
+                        FloatLayout:
+                            size_hint_x: 0.6
+                            TextInput:
+                                id: name_input
+                                on_text: root.on_name_text(self.text)
+                                size_hint_x: 1
+                                size_hint_y: None
+                                pos_hint: {'x':0, 'center_y':.5}
+                                height: '27dp'
+                                multiline: False
+                                text_align: 'justify'
+                GridLayout:
+                    id: param_grid_layout
+                    disabled: True
+                    cols: 2
+                    size_hint_y: 0.8
+                    GridLayout:
+                        size_hint_x: 0.45
+                        rows: 7
+                    FloatLayout:
+                        size_hint_x: 0.55
+        FloatLayout:
+            size_hint_x: 0.02
+        GridLayout:
+            id: right_grid
+            rows: 3
+            size_hint_x: 0.24
+            Label:
+                text:'Job List'
+                size_hint_y: None
+                padding: [0, '30dp']
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                color: WHITE
+                font_size: '21dp'
+                height: '40dp'
+                valign: 'center'
+            IP1ScrollView:
+                id: ip1_scroll
+                ip1_window: ip1_window
+                size_hint:(None,None)
+                height: right_grid.height - dp(80)
+                width: right_grid.width - dp(4)
+                bar_pos_y: 'right'
+                do_scroll_x: False
+                do_scroll_y: True
+            BlueButton:
+                disabled:  len(root.ip1_scroll.grid_layout.children) == 0
+                disabled_color: DARK_GREY
+                text: 'Detect Start Position'
+                size_hint:(None,None)
+                font_size: '15dp'
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                size: (right_grid.width - dp(4), '35dp')
+                on_release: root.detect()
+    FloatLayout:
+        id: loading_layout
+        size_hint: (1, 1)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 0.4  # Grey color with 50% opacity
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            id: animation_widget
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            size_hint: (0.2, 0.2)
+            text: 'Loading...'
+            font_size: '25dp'
+            font_name: root.app.resource_path('resources\\Inter.ttf')
+
+
+
+
+
+
+
+
+
+# =========================================================================================
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# =========================================================================================
+
+<IP2Window>:
+    name: 'IP2'
+    id: ip2_window
+    ip2_scroll: ip2_scroll
+    image_widget: image_widget
+    loading_layout: loading_layout
+    saved_label: saved_label
+    GridLayout:
+        canvas:
+            Color:
+                rgba: 1,1,1,0.1
+            Line:
+                points: [0, self.height - dp(40), self.width, self.height - dp(40)]
+                width: dp(0.3)
+            Line:
+                points: [self.width * 0.75, self.height, self.width * 0.75, 0]
+                width: dp(0.3)
+        cols: 3
+        GridLayout:
+            rows: 2
+            size_hint_x: 0.74
+            GridLayout:
+                cols: 3
+                size_hint_y: None
+                height: '40dp'
+                BlankButton:
+                    text:'←'
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_size: '35dp'
+                    padding: [0, '13dp']
+                    size_hint_x: None
+                    width: '80dp'
+                    on_release: 
+                        root.on_back_btn()
+                Label:
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    text: 'Images → Positions (verify start point)'
+                    font_size: '20dp'
+                    padding: ['3dp', '2dp']
+                    size_hint_x: None
+                    width: '467dp'
+                    halign: 'left'
+                    valign: 'center'
+                    text_size: self.size
+                FloatLayout:
+                    size_hint_x: 1
+            FloatLayout:
+                size_hint_y: 1
+                StartPointImage:
+                    id: image_widget
+                    ip2_window: ip2_window
+                    pos: self.parent.pos
+                    size: self.parent.size
+                    fit_mode: 'contain'
+                Label:
+                    id: saved_label
+                    text: 'Image saved.'
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    color: WHITE
+                    size_hint: None, None
+                    pos_hint: {'x':0.03, 'y': 0.01}
+                    font_size: '13dp'
+                    width: '173dp'
+                    height: '27dp'
+                    text_size: (self.width, self.height)
+                    valign: 'center'
+                    halign: 'left'
+                    opacity: 0
+        FloatLayout:
+            size_hint_x: 0.02
+        GridLayout:
+            id: right_grid
+            rows: 3
+            size_hint_x: 0.24
+            Label:
+                text:'Job List  '
+                size_hint_y: None
+                padding: [0, '30dp']
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                color: WHITE
+                font_size: '21dp'
+                height: '40dp'
+                valign: 'center'
+            IP2ScrollView:
+                id: ip2_scroll
+                ip2_window: ip2_window
+                size_hint:(None,None)
+                height: right_grid.height - dp(80)
+                width: right_grid.width - dp(4)
+                bar_pos_y: 'right'
+                do_scroll_x: False
+                do_scroll_y: True
+            BlueButton:
+                disabled:  len(root.ip2_scroll.grid_layout.children) == 0
+                disabled_color: DARK_GREY
+                text: 'Track Position'
+                size_hint:(None,None)
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_size: '15dp'
+                size: (right_grid.width - dp(4), '35dp')
+                on_release: root.track()
+    FloatLayout:
+        id: loading_layout
+        size_hint: (1, 1)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 0.4  # Grey color with 50% opacity
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            id: animation_widget
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            size_hint: (0.2, 0.2)
+            text: 'Loading...'
+            font_size: '25dp'
+            font_name: root.app.resource_path('resources\\Inter.ttf')
+
+
+
+
+
+
+
+
+
+# =========================================================================================
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# =========================================================================================
+
+<PS1Window>:
+    name: 'PS1'
+    id: ps1_window
+    ps1_scroll: ps1_scroll
+    select_btn: select_btn
+    location_label: location_label
+    file_location_label: file_location_label
+    file_select_layout: file_select_layout
+    param_grid_layout: param_grid_layout
+    name_grid_layout: name_grid_layout
+    name_input: name_input
+    dropdownx: dropdownx
+    dropdowny: dropdowny
+    my_checkbox: my_checkbox
+    GridLayout:
+        canvas:
+            Color:
+                rgba: 1,1,1,0.1
+            Line:
+                points: [0, self.height - dp(40), self.width, self.height - dp(40)]
+                width: dp(0.3)
+            Line:
+                points: [self.width * 0.75, self.height, self.width * 0.75, 0]
+                width: dp(0.3)
+            Color:
+                rgba: (42/255, 42/255, 45/255, 1)
+            Rectangle:
+                pos: (0,0)
+                size: (self.width * 0.75, (self.height - dp(27)) * 0.79)
+        cols: 3
+        GridLayout:
+            rows: 2
+            size_hint_x: 0.74
+            GridLayout:
+                cols: 3
+                size_hint_y: None
+                height: '40dp'
+                BlankButton:
+                    text:'←'
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_size: '35dp'
+                    padding: [0, '13dp']
+                    size_hint_x: None
+                    width: '80dp'
+                    on_release: 
+                        root.on_back_btn()
+                Label:
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    text: 'Screen Positions'
+                    font_size: '20dp'
+                    padding: ['3dp', '2dp']
+                    size_hint_x: None
+                    width: '467dp'
+                    halign: 'left'
+                    valign: 'center'
+                    text_size: self.size
+                FloatLayout:
+                    size_hint_x: 1
+            GridLayout:
+                rows: 4
+                size_hint_y: 1
+                FloatLayout:
+                    size_hint_y: 0.2
+                    BlueButton:
+                        id: select_btn
+                        size_hint:(None,None)
+                        size: ('107dp', '33dp')
+                        font_size: '12dp'
+                        pos_hint: {'x':.095, 'y':.3}
+                        text:'select folder(s)'
+                        on_release: root.select_folder()
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                    Label:
+                        id: location_label
+                        color: WHITE
+                        size_hint:(None,None)
+                        size: (self.parent.width * 0.8, '27dp')
+                        pos_hint: {'x':.1, 'y':0.15}
+                        text: 'No folder(s) selected'
+                        halign: 'left'
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        text_size: self.size
+                        shorten: True
+                        font_size: '11dp'
+                    GridLayout:
+                        id: name_grid_layout
+                        disabled: True
+                        cols: 2
+                        size_hint:(.64, 1)
+                        pos_hint: {'x':.36, 'y':0}
+                        Label:
+                            text: 'Job Name:'
+                            color: WHITE
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '16dp'
+                            size_hint_x: 0.35
+                        FloatLayout:
+                            size_hint_x: 0.6
+                            TextInput:
+                                id: name_input
+                                on_text: root.on_name_text(self.text)
+                                size_hint_x: 1
+                                size_hint_y: None
+                                pos_hint: {'x':.0, 'center_y':.5}
+                                height: '27dp'
+                                multiline: False
+                                text_align: 'justify'
+                FloatLayout:
+                    id: file_select_layout
+                    size_hint_y: 0.12
+                    disabled: True
+                    BlueButton:
+                        id: select_btn
+                        size_hint:(None,None)
+                        size: ('107dp', '33dp')
+                        disabled_color: DARK_GREY
+                        font_size: '12dp'
+                        pos_hint: {'x':.095, 'y':.3}
+                        text:'select file'
+                        on_release: root.select_file()
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                    Label:
+                        id: file_location_label
+                        color: WHITE
+                        size_hint:(None,None)
+                        size: (self.parent.width * 0.8, '33dp')
+                        pos_hint: {'x':.1, 'y':0.07}
+                        text: 'No file selected'
+                        halign: 'left'
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        text_size: self.size
+                        shorten: True
+                        font_size: '11dp'
+                GridLayout:
+                    id: param_grid_layout
+                    disabled: True
+                    cols: 3
+                    size_hint_y: 0.68
+                    FloatLayout:
+                        size_hint_x: .33
+                        Label:
+                            id: label_x
+                            text: 'Column x (pixels):'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            color: WHITE
+                            size_hint_x: 1/2
+                            size_hint_y: None
+                            pos_hint: {'center_x':1/2, 'center_y':9.5/10}
+                            height: '27dp'
+                        BlankSpinner:
+                            id: dropdownx
+                            pf1_window: root
+                            my_window: root
+                            current_job: root.current_job
+                            size_hint_x: None
+                            size_hint_y: None
+                            pos_hint: {'center_x':1/2}
+                            y: label_x.y - dp(30)
+                            size: ('143dp', '33dp')
+                            text: 'select column'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '12dp'
+                            on_text: root.select_columnx(self.text)
+                            _on_selection: root.select_columnx
+                            text_size: (self.width - dp(17), self.height)
+                            valign: 'center'
+                            halign: 'left'
+                            shorten: True
+                        Label:
+                            pos_hint: {'center_x':1/2}
+                            y: label_x.y - dp(30)
+                            size_hint_x: None
+                            size_hint_y: None
+                            size: ('143dp', '33dp')
+                            color: DARK_GREY
+                            disabled_color: DARK_GREY
+                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            text: '▾  '
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'right'
+                            shorten: True
+                    FloatLayout:
+                        size_hint_x: .33
+                        Label:
+                            id: label_y
+                            text: 'Column y (pixels):'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            color: WHITE
+                            size_hint_x: 1/2
+                            size_hint_y: None
+                            pos_hint: {'center_x':1/2, 'center_y':9.5/10}
+                            height: '27dp'
+                        BlankSpinner:
+                            id: dropdowny
+                            pf1_window: root
+                            my_window: root
+                            size_hint_x: None
+                            size_hint_y: None
+                            pos_hint: {'center_x':1/2}
+                            y: label_y.y - dp(30)
+                            size: ('143dp', '33dp')
+                            font_size: '12dp'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            text: 'select column'
+                            on_text: root.select_columny(self.text)
+                            _on_selection: root.select_columny
+                            text_size: (self.width - dp(17), self.height)
+                            valign: 'center'
+                            halign: 'left'
+                            shorten: True
+                        Label:
+                            pos_hint: {'center_x':1/2}
+                            y: label_x.y - dp(30)
+                            size_hint_x: None
+                            size_hint_y: None
+                            size: ('143dp', '33dp')
+                            color: DARK_GREY
+                            disabled_color: DARK_GREY
+                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            text: '▾  '
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'right'
+                            shorten: True
+                    FloatLayout:
+                        size_hint_x: .33
+                        Label:
+                            id: adjust_label
+                            text: 'Adjust all jobs in bulk: '
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            color: WHITE
+                            size_hint: None, None
+                            pos_hint: {'x':0.05, 'center_y':9/10}
+                            width: int(self.parent.width * 0.9 - 35)
+                            height: '27dp'
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'left'
+                        CheckBox:
+                            id: my_checkbox
+                            size_hint: (None, None)
+                            pos_hint: {'center_y':9/10}
+                            x: adjust_label.x + adjust_label.texture_size[0] + dp(3)
+                            size: ('13dp', '13dp')
+        FloatLayout:
+            size_hint_x: 0.02
+        GridLayout:
+            id: right_grid
+            rows: 3
+            size_hint_x: 0.24
+            Label:
+                text:'Job List'
+                size_hint_y: None
+                padding: [0, '30dp']
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                color: WHITE
+                font_size: '21dp'
+                height: '40dp'
+                valign: 'center'
+            PS1ScrollView:
+                id: ps1_scroll
+                ps1_window: ps1_window
+                size_hint:(None,None)
+                height: right_grid.height - dp(80)
+                width: right_grid.width - dp(4)
+                bar_pos_y: 'right'
+                do_scroll_x: False
+                do_scroll_y: True
+            BlueButton:
+                disabled:  len(root.ps1_scroll.grid_layout.children) == 0
+                disabled_color: DARK_GREY
+                text: 'Proceed'
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                size_hint:(None,None)
+                font_size: '15dp'
+                size: (right_grid.width - dp(4), '35dp')
+                on_release: root.proceed()
+
+
+
+
+
+
+
+
+
+# =========================================================================================
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# =========================================================================================
+
+<PS2Window>:
+    name: 'PS2'
+    id: ps2_window
+    image_widget: image_widget
+    frame_bar_layout: frame_bar_layout
+    frame_label: frame_label
+    ps2_scroll: ps2_scroll
+    bulk_checkbox: bulk_checkbox
+    saved_label: saved_label
+    GridLayout:
+        canvas:
+            Color:
+                rgba: 1,1,1,0.1
+            Line:
+                points: [0, self.height - dp(40), self.width, self.height - dp(40)]
+                width: dp(0.3)
+            Line:
+                points: [self.width * 0.75, self.height, self.width * 0.75, 0]
+                width: dp(0.3)
+        cols: 3
+        GridLayout:
+            id: bah_layout
+            rows: 2
+            size_hint_x: 0.74
+            GridLayout:
+                cols: 3
+                size_hint_y: None
+                height: '40dp'
+                BlankButton:
+                    text:'←'
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_size: '35dp'
+                    padding: [0, '13dp']
+                    size_hint_x: None
+                    width: '80dp'
+                    on_release: 
+                        root.on_back_btn()
+                Label:
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    text: 'Screen Positions'
+                    font_size: '20dp'
+                    padding: ['3dp', '2dp']
+                    size_hint_x: None
+                    width: '467dp'
+                    halign: 'left'
+                    valign: 'center'
+                    text_size: self.size
+                FloatLayout:
+                    size_hint_x: 1  
+            GridLayout:
+                id: image_layout
+                rows: 2
+                size_hint_y: None
+                height: bah_layout.height - dp(40)
+                FloatLayout:
+                    size_hint_y: None
+                    height: image_layout.height - dp(40)
+                    PillarTrackingImage:
+                        id: image_widget
+                        image_layout: image_layout
+                        bah_layout: bah_layout
+                        frame_label: frame_label
+                        ps2_window: ps2_window
+                        pos_hint: {'center_x':0.5, 'center_y':0.5}
+                        size_hint: (1,1)
+                        fit_mode: 'contain'
+                FloatLayout:
+                    id: frame_bar_layout
+                    size_hint_y: None
+                    height: '40dp'
+                    Label:
+                        id: saved_label
+                        text: 'Image saved.'
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        color: WHITE
+                        size_hint: None, None
+                        pos_hint: {'x':0.03, 'center_y': 0.5}
+                        font_size: '13dp'
+                        width: '173dp'
+                        height: '27dp'
+                        text_size: (self.width, self.height)
+                        valign: 'center'
+                        halign: 'left'
+                        opacity: 0
+                    Button:
+                        text:'←'
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_size: '24dp'
+                        size_hint: (None, None)
+                        size: '40dp', '40dp'
+                        pos_hint: {'center_x':0.4, 'center_y': 0.5}
+                        background_color: 0, 0, 0, 0
+                        color: BLUE
+                        on_press: image_widget.on_left_arrow_press()
+                    Label:
+                        id: frame_label
+                        text: str(root.current_job.current_frame) + '/' + str(len(root.current_job.image_locations)) if root.current_job is not None else ''
+                        pos_hint: {'center_x':0.5, 'center_y': 0.5}
+                        font_size: '13dp'
+                        size_hint: (None, None)
+                        size: '23dp', '23dp'
+                    Button:
+                        id: right_btn
+                        text:'→'
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_size: '24dp'
+                        size_hint: (None, None)
+                        size: '40dp', '40dp'
+                        pos_hint: {'center_x':0.6, 'center_y': 0.5}
+                        background_color: 0, 0, 0, 0
+                        color: BLUE
+                        on_press: image_widget.on_right_arrow_press()
+                    Label:
+                        id: adjust_label
+                        text: 'Adjust subsequent frames:  '
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        color: WHITE
+                        size_hint: None, None
+                        pos_hint: {'center_y': 0.5}
+                        font_size: '13dp' if final_btn.x - right_btn.x - dp(37) > dp(220) else dp(11)
+                        x: bulk_checkbox.x - self.texture_size[0] - 15 if final_btn.x - right_btn.x - dp(37) > dp(220) else bulk_checkbox.x - self.texture_size[0]
+                        width: '173dp' if final_btn.x - right_btn.x - dp(37) > dp(220) else dp(140)
+                        height: '27dp'
+                        text_size: (self.width, self.height)
+                        valign: 'center'
+                        halign: 'left'
+                    CheckBox:
+                        id: bulk_checkbox
+                        size_hint: (None, None)
+                        y: dp(13)  if final_btn.x - right_btn.x - dp(37) > dp(220) else dp(7)
+                        x: final_btn.x - dp(40)
+                        size: ('13dp', '13dp')
+                        active: False
+                        on_release: image_widget.on_key_up('f')
+        FloatLayout:
+            size_hint_x: 0.02
+        GridLayout:
+            id: right_grid
+            rows: 3
+            size_hint_x: 0.24
+            Label:
+                text:'Job List  '
+                size_hint_y: None
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                color: WHITE
+                font_size: '21dp'
+                height: '40dp'
+                valign: 'center'
+            PS2ScrollView:
+                id: ps2_scroll
+                ps2_window: ps2_window
+                size_hint:(None,None)
+                height: right_grid.height - dp(80)
+                width: right_grid.width - dp(4)
+                bar_pos_y: 'right'
+                do_scroll_x: False
+                do_scroll_y: True
+            BlueButton:
+                id: final_btn
+                disabled:  len(root.ps2_scroll.grid_layout.children) == 0
+                disabled_color: DARK_GREY
+                text: 'Verify Positions'
+                size_hint:(None,None)
+                font_size: '15dp'
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                size: (right_grid.width - dp(4), '35dp')
+                on_release: root.verify()
+
+
+
+
+
+
+
+
+
+# =========================================================================================
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# =========================================================================================
+
+<PF1Window>:
+    name: 'PF1'
+    id: pf1_window
+    dropdownx: dropdownx
+    dropdowny: dropdowny
+    pf1_scroll: pf1_scroll
+    select_btn: select_btn
+    location_label: location_label
+    param_grid_layout: param_grid_layout
+    name_grid_layout: name_grid_layout
+    name_input: name_input
+    pill_diam_input: pill_diam_input
+    pixel_micron_input: pixel_micron_input
+    time_base_input: time_base_input
+    pill_heig_input: pill_heig_input
+    pill_cont_input: pill_cont_input
+    pdms_E_input: pdms_E_input
+    pdms_gama_input: pdms_gama_input
+    pill_diam_input: pill_diam_input
+    my_checkbox: my_checkbox
+    GridLayout:
+        canvas:
+            Color:
+                rgba: 1,1,1,0.1
+            Line:
+                points: [0, self.height - dp(40), self.width, self.height - dp(40)]
+                width: dp(0.3)
+            Line:
+                points: [self.width * 0.75, self.height, self.width * 0.75, 0]
+                width: dp(0.3)
+            Color:
+                rgba: (42/255, 42/255, 45/255, 1)
+            Rectangle:
+                pos: (0,0)
+                size: (self.width * 0.75, (self.height - dp(40)) * 0.79)
+        cols: 3
+        GridLayout:
+            rows: 2
+            size_hint_x: 0.74
+            GridLayout:
+                cols: 3
+                size_hint_y: None
+                height: '40dp'
+                BlankButton:
+                    text:'←'
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_size: '35dp'
+                    padding: [0, '13dp']
+                    size_hint_x: None
+                    width: '80dp'
+                    on_release: 
+                        root.on_back_btn()
+                Label:
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    text: 'Positions → Forces'
+                    font_size: '20dp'
+                    padding: ['3dp', '2dp']
+                    size_hint_x: None
+                    width: '467dp'
+                    halign: 'left'
+                    valign: 'center'
+                    text_size: self.size
+                FloatLayout:
+                    size_hint_x: 1
+                    
+            GridLayout:
+                rows: 2
+                size_hint_y: 1
+                FloatLayout:
+                    size_hint_y: 0.2
+                    BlueButton:
+                        id: select_btn
+                        size_hint:(None,None)
+                        size: ('107dp', '33dp')
+                        font_size: '12dp'
+                        pos_hint: {'x':.095, 'y':.3}
+                        text:'select file(s)'
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        on_release: root.select_file()
+                    Label:
+                        id: location_label
+                        color: WHITE
+                        size_hint:(None,None)
+                        size: (self.parent.width * 0.8, '27dp')
+                        pos_hint: {'x':.095, 'y':0.06}
+                        text: ' No file(s) selected'
+                        halign: 'left'
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        text_size: self.size
+                        shorten: True
+                        font_size: '11dp'
+                    GridLayout:
+                        id: name_grid_layout
+                        disabled: True
+                        cols: 2
+                        size_hint:(.64, 1)
+                        pos_hint: {'x':.36, 'y':0}
+                        Label:
+                            text: 'Job Name:'
+                            color: WHITE
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '16dp'
+                            size_hint_x: 0.35
+                        FloatLayout:
+                            size_hint_x: 0.6
+                            TextInput:
+                                id: name_input
+                                on_text: root.on_name_text(self.text)
+                                size_hint_x: 1
+                                size_hint_y: None
+                                pos_hint: {'x':0, 'center_y':.5}
+                                height: '27dp'
+                                multiline: False
+                                text_align: 'justify'
+                GridLayout:
+                    id: param_grid_layout
+                    disabled: True
+                    cols: 2
+                    size_hint_y: 0.8
+                    GridLayout:
+                        size_hint_x: 0.45
+                        rows: 7
+                        GridLayout:
+                            cols: 3
+                            FloatLayout:
+                                size_hint_x: 0.78
+                                Label:
+                                    text: 'Pillar Diameter (µm)'
+                                    color: WHITE
+                                    size_hint: (1, 1)
+                                    pos_hint: {'center_x':0.5, 'center_y':0.5}
+                                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                                Button:
+                                    background_color: CLEAR
+                                    border: CLEAR
+                                    color: DARK_GREY
+                                    canvas.before:
+                                        Color:
+                                            rgba: (self.state == 'normal' and self.disabled == False) and BLUE or GREY
+                                        RoundedRectangle:
+                                            pos: self.pos
+                                            size: self.size
+                                            radius: [dp(5),]
+                                    size_hint: None, None
+                                    size: ('20dp', '20dp')
+                                    pos_hint: {'center_y':0.5}
+                                    x: diam_input_layout.x - dp(25)
+                                    background_normal: root.app.resource_path('resources\\reset_btn.png')
+                                    background_down: root.app.resource_path('resources\\reset_btn.png')
+                                    on_press: root.on_diam_reset_btn()
+                                    Image:
+                                        source: root.app.resource_path('resources\\reset_btn.png')
+                                        y: self.parent.y + dp(3)
+                                        x: self.parent.x + dp(3)
+                                        size: ('13dp',  '13dp')
+                            FloatLayout:
+                                id: diam_input_layout
+                                size_hint_x: 0.22
+                                FloatInput:
+                                    id: pill_diam_input
+                                    on_text: root.on_pilldiam_text(self.text)
+                                    size_hint_x: 0.9
+                                    size_hint_y: None
+                                    pos_hint: {'x':0, 'center_y':.5}
+                                    height: '27dp'
+                                    multiline: False
+                        GridLayout:
+                            cols: 2
+                            Label:
+                                text: 'Pillar Height (µm)'
+                                color: WHITE
+                                size_hint_x: 0.78
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                            FloatLayout:
+                                size_hint_x: 0.22
+                                FloatInput:
+                                    id: pill_heig_input
+                                    on_text: root.on_pillheig_text(self.text)
+                                    size_hint_x: 0.9
+                                    size_hint_y: None
+                                    pos_hint: {'x':0, 'center_y':.5}
+                                    height: '27dp'
+                                    multiline: False
+                        GridLayout:
+                            cols: 2
+                            Label:
+                                text: 'Pillar Contact Height (µm)'
+                                color: WHITE
+                                size_hint_x: 0.78
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                            FloatLayout:
+                                size_hint_x: 0.22
+                                FloatInput:
+                                    id: pill_cont_input
+                                    on_text: root.on_pillcont_text(self.text)
+                                    size_hint_x: 0.9
+                                    size_hint_y: None
+                                    pos_hint: {'x':0, 'center_y':.5}
+                                    height: '27dp'
+                                    multiline: False
+                        GridLayout:
+                            cols: 2
+                            Label:
+                                text: 'Pixel:Micron Ratio'
+                                color: WHITE
+                                size_hint_x: 0.78
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                            FloatLayout:
+                                size_hint_x: 0.22
+                                FloatInput:
+                                    id: pixel_micron_input
+                                    on_text: root.on_pixelmicron_text(self.text)
+                                    size_hint_x: 0.9
+                                    size_hint_y: None
+                                    pos_hint: {'x':0, 'center_y':.5}
+                                    height: '27dp'
+                                    multiline: False
+                        GridLayout:
+                            cols: 2
+                            Label:
+                                text: "Young's Modulus (MPa)"
+                                color: WHITE
+                                size_hint_x: 0.78
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                            FloatLayout:
+                                size_hint_x: 0.22
+                                FloatInput:
+                                    id: pdms_E_input
+                                    on_text: root.on_pdmsE_text(self.text)
+                                    size_hint_x: 0.9
+                                    size_hint_y: None
+                                    pos_hint: {'x':0, 'center_y':.5}
+                                    height: '27dp'
+                                    multiline: False
+                        GridLayout:
+                            cols: 2
+                            Label:
+                                text: "Poisson's Ratio"
+                                color: WHITE
+                                size_hint_x: 0.78
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                            FloatLayout:
+                                size_hint_x: 0.22
+                                FloatInput:
+                                    id: pdms_gama_input
+                                    on_text: root.on_pdmsgama_text(self.text)
+                                    size_hint_x: 0.9
+                                    size_hint_y: None
+                                    pos_hint: {'x':0, 'center_y':.5}
+                                    height: '27dp'
+                                    multiline: False
+                        GridLayout:
+                            cols: 2
+                            Label:
+                                text: 'Frame Frequency (fps)'
+                                color: WHITE
+                                size_hint_x: 0.78
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                            FloatLayout:
+                                size_hint_x: 0.22
+                                FloatInput:
+                                    id: time_base_input
+                                    on_text: root.on_timebase_text(self.text)
+                                    size_hint_x: 0.9
+                                    size_hint_y: None
+                                    pos_hint: {'x':0, 'center_y':.5}
+                                    height: '27dp'
+                                    multiline: False
+                    FloatLayout:
+                        size_hint_x: 0.55
+
+                        Label:
+                            id: adjust_label
+                            text: 'Adjust all jobs in bulk: '
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            color: WHITE
+                            size_hint: None, None
+                            pos_hint: {'x':0.05, 'center_y':13/14}
+                            width: '200dp'
+                            height: '27dp'
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'left'
+                        CheckBox:
+                            id: my_checkbox
+                            size_hint: (None, None)
+                            pos_hint: {'center_y':13/14}
+                            x: adjust_label.x + adjust_label.texture_size[0] + dp(3)
+                            size: ('13dp', '13dp')
+                        Label:
+                            id: label_x
+                            text: 'Column x (pixels):'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            color: WHITE
+                            size_hint_x: 1/2
+                            size_hint_y: None
+                            pos_hint: {'center_x':0.25, 'center_y':14/17}
+                            height: '27dp'
+                        BlankSpinner:
+                            id: dropdownx
+                            pf1_window: root
+                            my_window: root
+                            current_job: root.current_job
+                            size_hint_x: 1/2
+                            size_hint_y: None
+                            pos_hint: {'center_x':0.25}
+                            y: label_x.y - dp(37)
+                            font_size: '12dp'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            height: '37dp'
+                            text: 'select column'
+                            on_text: root.select_columnx(self.text)
+                            _on_selection: root.select_columnx
+                            text_size: (self.width - dp(17), self.height)
+                            valign: 'center'
+                            halign: 'left'
+                            shorten: True
+                        Label:
+                            size_hint_x: 1/2
+                            size_hint_y: None
+                            pos_hint: {'center_x':0.25}
+                            y: label_y.y - dp(37)
+                            height: '37dp'
+                            color: DARK_GREY
+                            disabled_color: DARK_GREY
+                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            text: '▾ '
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'right'
+                            shorten: True
+                        Label:
+                            id: label_y
+                            text: 'Column y (pixels):'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            color: WHITE
+                            size_hint_x: 1/2
+                            size_hint_y: None
+                            pos_hint: {'center_x':0.75, 'center_y':14/17}
+                            height: '27dp'
+                        BlankSpinner:
+                            id: dropdowny
+                            pf1_window: root
+                            my_window: root
+                            size_hint_x: 1/2
+                            size_hint_y: None
+                            pos_hint: {'center_x':0.75}
+                            font_size: '12dp'
+                            y: label_y.y - dp(37)
+                            height: '37dp'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            text: 'select column'
+                            on_text: root.select_columny(self.text)
+                            _on_selection: root.select_columny
+                            text_size: (self.width - dp(17), self.height)
+                            valign: 'center'
+                            halign: 'left'
+                            shorten: True
+                        Label:
+                            size_hint_x: 1/2
+                            size_hint_y: None
+                            pos_hint: {'center_x':0.75}
+                            y: label_y.y - dp(37)
+                            height: '37dp'
+                            color: DARK_GREY
+                            disabled_color: DARK_GREY
+                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            text: '▾ '
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'right'
+                            shorten: True
+        FloatLayout:
+            size_hint_x: 0.02
+        GridLayout:
+            id: right_grid
+            rows: 3
+            size_hint_x: 0.24
+            Label:
+                text:'Job List'
+                size_hint_y: None
+                padding: [0, '30dp']
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                color: WHITE
+                font_size: '21dp'
+                height: '40dp'
+                valign: 'center'
+            PF1ScrollView:
+                id: pf1_scroll
+                pf1_window: pf1_window
+                size_hint:(None,None)
+                height: right_grid.height - dp(80)
+                width: right_grid.width - dp(4)
+                bar_pos_y: 'right'
+                do_scroll_x: False
+                do_scroll_y: True
+            BlueButton:
+                disabled:  len(root.pf1_scroll.grid_layout.children) == 0
+                disabled_color: DARK_GREY
+                text: 'Convert to Forces'
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                size_hint:(None,None)
+                font_size: '15dp'
+                size: (right_grid.width - dp(4), '35dp')
+                on_release: root.convert()
+
+
+
+
+
+
+
+
+
+# =========================================================================================
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# =========================================================================================
+
+<FG1Window>:
+    name: 'FG1'
+    id: fg1_window
+    dropdownx: dropdownx
+    dropdowny: dropdowny
+    dropdownt: dropdownt
+    dropdowntf: dropdowntf
+    dropdownxf: dropdownxf
+    dropdownyf: dropdownyf
+    dropdowndfx: dropdowndfx
+    dropdowndfy: dropdowndfy
+    fg1_scroll: fg1_scroll
+    select_btn: select_btn
+    location_label: location_label
+    param_grid_layout: param_grid_layout
+    name_grid_layout: name_grid_layout
+    name_input: name_input
+    my_checkbox: my_checkbox
+    GridLayout:
+        canvas:
+            Color:
+                rgba: 1,1,1,0.1
+            Line:
+                points: [0, self.height - dp(40), self.width, self.height - dp(40)]
+                width: dp(0.3)
+            Line:
+                points: [self.width * 0.75, self.height, self.width * 0.75, 0]
+                width: dp(0.3)
+            Color:
+                rgba: (42/255, 42/255, 45/255, 1)
+            Rectangle:
+                pos: (0,0)
+                size: (self.width * 0.75, (self.height - dp(40)) * 0.79)
+        cols: 3
+        GridLayout:
+            rows: 2
+            size_hint_x: 0.74
+            GridLayout:
+                cols: 3
+                size_hint_y: None
+                height: '40dp'
+                BlankButton:
+                    text:'←'
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_size: '35dp'
+                    padding: [0, '13dp']
+                    size_hint_x: None
+                    width: '80dp'
+                    on_release: 
+                        root.on_back_btn()
+                Label:
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    text: 'Forces → Plots'
+                    font_size: '20dp'
+                    padding: ['3dp', '2dp']
+                    size_hint_x: None
+                    width: '467dp'
+                    halign: 'left'
+                    valign: 'center'
+                    text_size: self.size
+                FloatLayout:
+                    size_hint_x: 1
+            GridLayout:
+                rows: 2
+                size_hint_y: 1
+                FloatLayout:
+                    size_hint_y: 0.2
+                    BlueButton:
+                        id: select_btn
+                        size_hint:(None,None)
+                        size: ('107dp', '33dp')
+                        font_size: '12dp'
+                        pos_hint: {'x':.095, 'y':.3}
+                        text:'select file(s)'
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        on_release: root.select_file()
+                    Label:
+                        id: location_label
+                        color: WHITE
+                        size_hint:(None,None)
+                        size: (self.parent.width * 0.8, '27dp')
+                        pos_hint: {'x':.095, 'y':0.06}
+                        text: 'No file(s) selected'
+                        halign: 'left'
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        text_size: self.size
+                        shorten: True
+                        font_size: '11dp'
+                    GridLayout:
+                        id: name_grid_layout
+                        disabled: True
+                        cols: 2
+                        size_hint:(.64, 1)
+                        pos_hint: {'x':.36, 'y':0}
+                        Label:
+                            text: 'Job Name:'
+                            color: WHITE
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '16dp'
+                            size_hint_x: 0.3
+                        FloatLayout:
+                            size_hint_x: 0.6
+                            TextInput:
+                                id: name_input
+                                on_text: root.on_name_text(self.text)
+                                size_hint_x: 0.9
+                                size_hint_y: None
+                                pos_hint: {'x':0, 'center_y':.5}
+                                height: '27dp'
+                                multiline: False
+                                text_align: 'justify'
+                GridLayout:
+                    id: param_grid_layout
+                    disabled: True
+                    cols: 4
+                    size_hint_y: 0.8
+                    FloatLayout:
+                        size_hint_x: 0.005
+                    FloatLayout:
+                        size_hint_x: 0.53
+                        Label:
+                            id: adjust_label
+                            text: 'Adjust all jobs in bulk: '
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            color: WHITE
+                            size_hint: None, None
+                            pos_hint: {'x':0.05, 'center_y':11/20}
+                            width: '200dp'
+                            height: '27dp'
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'left'
+                        CheckBox:
+                            id: my_checkbox
+                            size_hint: (None, None)
+                            pos_hint: {'center_y':11/20}
+                            x: adjust_label.x + adjust_label.texture_size[0] + dp(3)
+                            size: ('13dp', '13dp')
+
+                        Label:
+                            id: label_x
+                            text: 'Column x (µm):'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '12dp'
+                            color: WHITE
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':2/16, 'center_y':17.3/18}
+                            height: '27dp'
+                        BlankSpinner:
+                            id: dropdownx
+                            pf1_window: root
+                            my_window: root
+                            current_job: root.current_job
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':2/16}
+                            y: label_x.y - dp(23)
+                            height: '27dp'
+                            text: 'select column'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            on_text: root.select_columnx(self.text)
+                            _on_selection: root.select_columnx
+                            text_size: (self.width - dp(17), self.height)
+                            valign: 'center'
+                            halign: 'left'
+                            shorten: True
+                            font_size: '12dp'
+                        Label:
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':2/16}
+                            y: label_y.y - dp(23)
+                            height: '27dp'
+                            color: DARK_GREY
+                            disabled_color: DARK_GREY
+                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            text: '▾ '
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'right'
+                            shorten: True
+
+                        Label:
+                            id: label_y
+                            text: 'Column y (µm):'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '12dp'
+                            color: WHITE
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':6/16, 'center_y':17.3/18}
+                            height: '27dp'
+                        BlankSpinner:
+                            id: dropdowny
+                            pf1_window: root
+                            my_window: root
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':6/16}
+                            y: label_y.y - dp(23)
+                            height: '27dp'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            text: 'select column'
+                            on_text: root.select_columny(self.text)
+                            _on_selection: root.select_columny
+                            text_size: (self.width - dp(17), self.height)
+                            valign: 'center'
+                            halign: 'left'
+                            shorten: True
+                            font_size: '12dp'
+                        Label:
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':6/16}
+                            y: label_y.y - dp(23)
+                            height: '27dp'
+                            color: DARK_GREY
+                            disabled_color: DARK_GREY
+                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            text: '▾ '
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'right'
+                            shorten: True
+                        Label:
+                            id: label_t
+                            text: 'Column Time (sec):'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '12dp'
+                            color: WHITE
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':10/16, 'center_y':17.3/18}
+                            height: '27dp'
+                        BlankSpinner:
+                            id: dropdownt
+                            pf1_window: root
+                            my_window: root
+                            my_window: root
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':10/16}
+                            y: label_t.y - dp(23)
+                            height: '27dp'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            text: 'select column'
+                            on_text: root.select_columnt(self.text)
+                            _on_selection: root.select_columnt
+                            text_size: (self.width - dp(17), self.height)
+                            valign: 'center'
+                            halign: 'left'
+                            shorten: True
+                            font_size: '12dp'
+                        Label:
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':10/16}
+                            y: label_y.y - dp(23)
+                            height: '27dp'
+                            color: DARK_GREY
+                            disabled_color: DARK_GREY
+                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            text: '▾ '
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'right'
+                            shorten: True
+                        Label:
+                            id: label_tf
+                            text: 'Column Total Force (µN):'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '12dp'
+                            color: WHITE
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':14/16, 'center_y':17.3/18}
+                            height: '27dp'
+                        BlankSpinner:
+                            id: dropdowntf
+                            pf1_window: root
+                            my_window: root
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':14/16}
+                            y: label_tf.y - dp(23)
+                            height: '27dp'
+                            text: 'select column'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            on_text: root.select_columntf(self.text)
+                            _on_selection: root.select_columntf
+                            text_size: (self.width - dp(17), self.height)
+                            valign: 'center'
+                            halign: 'left'
+                            shorten: True
+                            font_size: '12dp'
+                        Label:
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':14/16}
+                            y: label_y.y - dp(23)
+                            height: '27dp'
+                            color: DARK_GREY
+                            disabled_color: DARK_GREY
+                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            text: '▾ '
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'right'
+                            shorten: True
+                        Label:
+                            id: label_xf
+                            text: 'Column x Force (µN):'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '12dp'
+                            color: WHITE
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':2/16, 'center_y':15.5/20}
+                            height: '27dp'
+                        BlankSpinner:
+                            id: dropdownxf
+                            pf1_window: root
+                            my_window: root
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':2/16}
+                            y: label_xf.y - dp(23)
+                            height: '27dp'
+                            text: 'select column'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            on_text: root.select_columnxf(self.text)
+                            _on_selection: root.select_columnxf
+                            text_size: (self.width - dp(17), self.height)
+                            valign: 'center'
+                            halign: 'left'
+                            shorten: True
+                            font_size: '12dp'
+                        Label:
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':2/16}
+                            y: label_yf.y - dp(23)
+                            height: '27dp'
+                            color: DARK_GREY
+                            disabled_color: DARK_GREY
+                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            text: '▾ '
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'right'
+                            shorten: True
+                        Label:
+                            id: label_yf
+                            text: 'Column y Force (µN):'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '12dp'
+                            color: WHITE
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':6/16, 'center_y':15.5/20}
+                            height: '27dp'
+                        BlankSpinner:
+                            id: dropdownyf
+                            pf1_window: root
+                            my_window: root
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':6/16}
+                            y: label_yf.y - dp(23)
+                            height: '27dp'
+                            text: 'select column'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            on_text: root.select_columnyf(self.text)
+                            _on_selection: root.select_columnyf
+                            text_size: (self.width - dp(17), self.height)
+                            valign: 'center'
+                            halign: 'left'
+                            shorten: True
+                            font_size: '12dp'
+                        Label:
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':6/16}
+                            y: label_yf.y - dp(23)
+                            height: '27dp'
+                            color: DARK_GREY
+                            disabled_color: DARK_GREY
+                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            text: '▾ '
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'right'
+                            shorten: True
+                        Label:
+                            id: label_dfx
+                            text: 'Column Δx Force (µN):'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '12dp'
+                            color: WHITE
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':10/16, 'center_y':15.5/20}
+                            height: '27dp'
+                        BlankSpinner:
+                            id: dropdowndfx
+                            pf1_window: root
+                            my_window: root
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':10/16}
+                            y: label_dfx.y - dp(23)
+                            height: '27dp'
+                            text: 'select column'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            on_text: root.select_columndfx(self.text)
+                            _on_selection: root.select_columndfx
+                            text_size: (self.width - dp(17), self.height)
+                            valign: 'center'
+                            halign: 'left'
+                            shorten: True
+                            font_size: '12dp'
+                        Label:
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':10/16}
+                            y: label_yf.y - dp(23)
+                            height: '27dp'
+                            color: DARK_GREY
+                            disabled_color: DARK_GREY
+                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            text: '▾ '
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'right'
+                            shorten: True
+                        Label:
+                            id: label_dfy
+                            text: 'Column Δy Force (µN):'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '12dp'
+                            color: WHITE
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':14/16, 'center_y':15.5/20}
+                            height: '27dp'
+                        BlankSpinner:
+                            id: dropdowndfy
+                            pf1_window: root
+                            my_window: root
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':14/16}
+                            y: label_dfy.y - dp(23)
+                            height: '27dp'
+                            text: 'select column'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            on_text: root.select_columndfy(self.text)
+                            _on_selection: root.select_columndfy
+                            text_size: (self.width - dp(17), self.height)
+                            valign: 'center'
+                            halign: 'left'
+                            shorten: True
+                            font_size: '12dp'
+                        Label:
+                            size_hint_x: 1/4
+                            size_hint_y: None
+                            pos_hint: {'center_x':14/16}
+                            y: label_yf.y - dp(23)
+                            height: '27dp'
+                            color: DARK_GREY
+                            disabled_color: DARK_GREY
+                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            text: '▾ '
+                            text_size: (self.width, self.height)
+                            valign: 'center'
+                            halign: 'right'
+                            shorten: True
+                    FloatLayout:
+                        size_hint_x: 0.005
+        GridLayout:
+            id: right_grid
+            rows: 3
+            size_hint_x: 0.24
+            Label:
+                text:'Job List  '
+                size_hint_y: None
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                color: WHITE
+                font_size: '21dp'
+                height: '40dp'
+                valign: 'center'
+            FG1ScrollView:
+                fg1_window: fg1_window
+                size_hint:(None,None)
+                height: right_grid.height - dp(80)
+                width: right_grid.width - dp(4)
+                id: fg1_scroll
+                bar_pos_y: 'right'
+                do_scroll_x: False
+                do_scroll_y: True
+            BlueButton:
+                disabled:  len(root.fg1_scroll.grid_layout.children) == 0
+                disabled_color: DARK_GREY
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                text: 'Generate Plots'
+                size_hint:(None,None)
+                font_size: '15dp'
+                size: (right_grid.width - dp(4), '35dp')
+                on_release: root.generate()
+
+
+
+
+
+
+
+
+
+# =========================================================================================
+# +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+# =========================================================================================
+
+<FG2Window>:
+    name: 'FG2'
+    id: fg2_window
+    fg2_scroll: fg2_scroll
+    location_label: location_label
+    param_grid_layout: param_grid_layout
+    name_grid_layout: name_grid_layout
+    name_input: name_input
+    title_input: title_input
+    x_title_input: x_title_input
+    y_title_input: y_title_input
+    gt1_checkbox: gt1_checkbox
+    gt2_checkbox: gt2_checkbox
+    gt3_checkbox: gt3_checkbox
+    gt4_checkbox: gt4_checkbox
+    gt5_checkbox: gt5_checkbox
+    gt6_checkbox: gt6_checkbox
+    gt7_checkbox: gt7_checkbox
+    gt8_checkbox: gt8_checkbox
+    png_checkbox: png_checkbox
+    svg_checkbox: svg_checkbox
+    dropdown_plot: dropdown_plot
+    my_checkbox: my_checkbox
+    graph_widget: graph_widget
+    y_axis_min_input: y_axis_min_input
+    y_axis_max_input: y_axis_max_input
+    loading_layout: loading_layout
+    animation_widget: animation_widget
+    GridLayout:
+        canvas:
+            Color:
+                rgba: 1,1,1,0.1
+            Line:
+                points: [0, self.height - dp(40), self.width, self.height - dp(40)]
+                width: dp(0.3)
+            Line:
+                points: [self.width * 0.75, self.height, self.width * 0.75, 0]
+                width: dp(0.3)
+            Color:
+                rgba: (42/255, 42/255, 45/255, 1)
+            Rectangle:
+                pos: (0,0)
+                size: (self.width * 0.75, (self.height - dp(40)) * 0.88)
+        cols: 3
+        GridLayout:
+            rows: 2
+            size_hint_x: 0.74
+            GridLayout:
+                cols: 3
+                size_hint_y: None
+                height: '40dp'
+                BlankButton:
+                    text:'←'
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_size: '35dp'
+                    padding: [0, '13dp']
+                    size_hint_x: None
+                    width: '80dp'
+                    on_release: 
+                        root.on_back_btn()
+                Label:
+                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    text: 'Forces → Plots'
+                    font_size: '20dp'
+                    padding: ['3dp', '2dp']
+                    size_hint_x: None
+                    width: '467dp'
+                    halign: 'left'
+                    valign: 'center'
+                    text_size: self.size
+                FloatLayout:
+                    size_hint_x: 1
+            GridLayout:
+                rows: 2
+                size_hint_y: 1
+                FloatLayout:
+                    size_hint_y: 0.13
+                    Label:
+                        id: location_label
+                        color: WHITE
+                        size_hint:(None,None)
+                        size: (self.parent.width * 0.95, '27dp')
+                        pos_hint: {'x':0.05, 'y':0.17}
+                        text: ' No file(s) selected'
+                        halign: 'left'
+                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        text_size: self.size
+                        shorten: True
+                        font_size: '11dp'
+                    GridLayout:
+                        id: name_grid_layout
+                        disabled: True
+                        cols: 2
+                        size_hint:(.64, 1)
+                        pos_hint: {'x':.36, 'y':0.2}
+                        Label:
+                            text: 'Job Name:'
+                            color: WHITE
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '16dp'
+                            size_hint_x: 0.35
+                        FloatLayout:
+                            size_hint_x: 0.6
+                            TextInput:
+                                id: name_input
+                                on_text: root.on_name_text(self.text)
+                                size_hint_x: 0.9
+                                size_hint_y: None
+                                pos_hint: {'x':0, 'center_y':.5}
+                                height: '27dp'
+                                multiline: False
+                                text_align: 'justify'
+                GridLayout:
+                    id: param_grid_layout
+                    disabled: False    # CHANGE TO True AFTER DEVELOPMENT
+                    cols: 2
+                    size_hint_y: 0.87
+                    GridLayout:
+                        rows: 9
+                        size_hint_y: 0.4
+                        # Title
+                        FloatLayout:
+                            size_hint_y:1/9
+                            Label:
+                                text: 'Title:'
+                                color: WHITE
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                size_hint: 0.3, 1
+                                pos_hint: {'x':0.05, 'center_y':.5}
+                            TextInput:
+                                id: title_input
+                                on_text: root.on_title_text(self.text)
+                                on_text_validate: graph_widget.update_widget()
+                                on_focus: graph_widget.update_widget(focus=self.focus)
+                                size_hint: 0.55, None
+                                pos_hint: {'x':0.4, 'center_y':.5}
+                                text: app.DEFAULT_TITLES[('t', graph_widget.current_graph)]
+                                height: '27dp'
+                                multiline: False
+                                text_align: 'justify'
+                        # X title
+                        FloatLayout:
+                            size_hint_y:1/9
+                            Label:
+                                text: 'x-Title:'
+                                color: WHITE
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                size_hint: 0.3, 1
+                                pos_hint: {'x':0.05, 'center_y':.5}
+                            TextInput:
+                                id: x_title_input
+                                on_text: root.on_x_title_text(self.text)
+                                on_text_validate: graph_widget.update_widget()
+                                on_focus: graph_widget.update_widget(focus=self.focus)
+                                size_hint: 0.55, None
+                                pos_hint: {'x':0.4, 'center_y':.5}
+                                text: app.DEFAULT_TITLES[('x_t', graph_widget.current_graph)]
+                                height: '27dp'
+                                multiline: False
+                                text_align: 'justify'
+                        # Y title
+                        FloatLayout:
+                            size_hint_y:1/9
+                            Label:
+                                text: 'y-Title:'
+                                color: WHITE
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                size_hint: 0.3, 1
+                                pos_hint: {'x':0.05, 'center_y':.5}
+                            TextInput:
+                                id: y_title_input
+                                on_text: root.on_y_title_text(self.text)
+                                on_text_validate: graph_widget.update_widget()
+                                on_focus: graph_widget.update_widget(focus=self.focus)
+                                size_hint: 0.55, None
+                                pos_hint: {'x':0.4, 'center_y':.5}
+                                text: app.DEFAULT_TITLES[('y_t', graph_widget.current_graph)]
+                                height: '27dp'
+                                multiline: False
+                                text_align: 'justify'
+                        # Adjust in bulk
+                        GridLayout:
+                            cols: 2
+                            size_hint: 1, 7/90
+                            Label:
+                                id: adjust_label
+                                text: 'Adjust all jobs in bulk: '
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint: 0.75, 1
+                                text_size: (self.width, self.height)
+                                valign: 'center'
+                                halign: 'center'
+                            CheckBox:
+                                id: my_checkbox
+                                size_hint: 0.25, 1
+                        # GRAPH TYPES
+                        Label:
+                            text: 'Plots to Export'
+                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_size: '20dp'
+                            color: WHITE
+                            size_hint_y: 12/90
+                            padding: ['13dp', '3dp']
+                            text_size: (self.width, self.height)
+                            valign: 'bottom'
+                            halign: 'left'
+                        # Pos graph
+                        GridLayout:
+                            cols: 4
+                            size_hint_y: 1/9
+                            Label:
+                                id: graph_type_1_label
+                                text: 'Total Force (1)'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint: 0.4, 1
+                                text_size: (self.width, self.height)
+                                valign: 'center'
+                                halign: 'center'
+                            CheckBox:
+                                id: gt1_checkbox
+                                size_hint: 0.1, 1
+                                on_press: root.on_gt1_checkbox()
+                            Label:
+                                id: graph_type_2_label
+                                text: 'Force x & y (2)'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint: 0.4, 1
+                                text_size: (self.width, self.height)
+                                valign: 'center'
+                                halign: 'center'
+                            CheckBox:
+                                id: gt2_checkbox
+                                size_hint: 0.1, 1
+                                on_press: root.on_gt2_checkbox()
+                        # Force graph
+                        GridLayout:
+                            cols: 4
+                            size_hint_y: 1/9
+                            Label:
+                                id: graph_type_3_label
+                                text: 'Force x (3)'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint: 0.4, 1
+                                text_size: (self.width, self.height)
+                                valign: 'center'
+                                halign: 'center'
+                            CheckBox:
+                                id: gt3_checkbox
+                                size_hint: 0.1, 1
+                                on_press: root.on_gt3_checkbox()
+                            Label:
+                                id: graph_type_4_label
+                                text: 'Force y (4)'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint: 0.4, 1
+                                text_size: (self.width, self.height)
+                                valign: 'center'
+                                halign: 'center'
+                            CheckBox:
+                                id: gt4_checkbox
+                                size_hint: 0.1, 1
+                                on_press: root.on_gt4_checkbox()
+                        # Delta graph
+                        GridLayout:
+                            cols: 4
+                            size_hint_y: 1/9
+                            Label:
+                                id: graph_type_5_label
+                                text: 'Position x (5)'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint: 0.4, 1
+                                text_size: (self.width, self.height)
+                                valign: 'center'
+                                halign: 'center'
+                            CheckBox:
+                                id: gt5_checkbox
+                                size_hint: 0.1, 1
+                                on_press: root.on_gt5_checkbox()
+                            Label:
+                                id: graph_type_6_label
+                                text: 'Position y (6)'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint: 0.4, 1
+                                text_size: (self.width, self.height)
+                                valign: 'center'
+                                halign: 'center'
+                            CheckBox:
+                                id: gt6_checkbox
+                                size_hint: 0.1, 1
+                                on_press: root.on_gt6_checkbox()
+                        # Both graph
+                        GridLayout:
+                            cols: 4
+                            size_hint_y: 1/9
+                            Label:
+                                id: graph_type_7_label
+                                text: 'Δ Force x (7)'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint: 0.4, 1
+                                text_size: (self.width, self.height)
+                                valign: 'center'
+                                halign: 'center'
+                            CheckBox:
+                                id: gt7_checkbox
+                                size_hint: 0.1, 1
+                                on_press: root.on_gt7_checkbox()
+                            Label:
+                                id: graph_type_8_label
+                                text: 'Δ Force y (8)'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint: 0.4, 1
+                                text_size: (self.width, self.height)
+                                valign: 'center'
+                                halign: 'center'
+                            CheckBox:
+                                id: gt8_checkbox
+                                size_hint: 0.1, 1
+                                on_press: root.on_gt8_checkbox()
+                    GridLayout:
+                        rows: 4
+                        size_hint_y: 0.6
+                        # Plot type
+                        GridLayout:
+                            cols: 4
+                            size_hint: 1, 0.1
+                            Label:
+                                id: label_plot_type
+                                text: 'Plot Type:'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint_x: 0.3
+                            FloatLayout:
+                                size_hint_x: 0.05
+                            PF2BlankSpinner:
+                                id: dropdown_plot
+                                pf2_window: root
+                                current_job: root.current_job
+                                values: ['Scatter', 'Line', 'Bar']
+                                font_size: '13dp'
+                                size_hint_x: 0.4
+                                size_hint_y: None
+                                height: '40dp'
+                                text: 'Scatter'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                on_text: root.select_plot_type(self.text)
+                                text_size: (self.width - dp(17), self.height)
+                                valign: 'center'
+                                halign: 'center'
+                                shorten: True
+                            FloatLayout:
+                                size_hint_x: 0.25
+                                Label:
+                                    size_hint_x: 1/4
+                                    size_hint_y: None
+                                    size_hint: None, None
+                                    pos: dropdown_plot.pos
+                                    size: dropdown_plot.size
+                                    color: DARK_GREY
+                                    disabled_color: DARK_GREY
+                                    font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                                    text: '▾  '
+                                    text_size: (self.width, self.height)
+                                    valign: 'center'
+                                    halign: 'right'
+                                    shorten: True
+                        GridLayout:
+                            cols: 4
+                            size_hint: 1, 0.1
+                            Label:
+                                id: svg_label
+                                text: 'Export svg: '
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint: 3/8, 1
+                                text_size: (self.width, self.height)
+                                valign: 'center'
+                                halign: 'center'
+                            CheckBox:
+                                id: svg_checkbox
+                                size_hint: 1/8, 1
+                                on_press: root.on_svg_checkbox()
+                            Label:
+                                id: png_label
+                                text: 'Export png: '
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint: 3/8, 1
+                                text_size: (self.width, self.height)
+                                valign: 'center'
+                                halign: 'center'
+                            CheckBox:
+                                id: png_checkbox
+                                size_hint: 1/8, 1
+                                on_press: root.on_png_checkbox()
+                        # Adjust axis
+                        # Y title
+                        FloatLayout:
+                            size_hint_y:0.1
+                            Label:
+                                id: adjust_label
+                                text: 'y-axis min:'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint: 0.35, 1
+                                text_size: (self.width, self.height)
+                                valign: 'center'
+                                halign: 'center'
+                                pos_hint: {'x':0, 'center_y':.5}
+                            FloatInput:
+                                id: y_axis_min_input
+                                on_text: root.on_y_min_text(self.text)
+                                on_text_validate: graph_widget.update_widget()
+                                on_focus: graph_widget.update_widget(focus=self.focus)
+                                size_hint: 0.12, None
+                                height: '27dp'
+                                multiline: False
+                                pos_hint: {'x':0.33, 'center_y':.5}
+                                text_align: 'justify'
+                            Label:
+                                id: adjust_label
+                                text: 'y-axis max:'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                color: WHITE
+                                size_hint: 0.35, 1
+                                text_size: (self.width, self.height)
+                                valign: 'center'
+                                halign: 'center'
+                                pos_hint: {'x':0.5, 'center_y':.5}
+                            FloatInput:
+                                id: y_axis_max_input
+                                on_text: root.on_y_max_text(self.text)
+                                on_text_validate: graph_widget.update_widget()
+                                on_focus: graph_widget.update_widget(focus=self.focus)
+                                size_hint: 0.12, None
+                                height: '27dp'
+                                multiline: False
+                                pos_hint: {'x':0.83, 'center_y':.5}
+                                text_align: 'justify'
+                        # Graph preview
+                        GraphWidget:
+                            id: graph_widget
+                            size_hint: 1, 0.7
+                            fg2_window: root
+                            image_widget: image_widget
+                            graph_label: graph_label
+                            Image:
+                                id: image_widget
+                                pos: (graph_widget.x + graph_widget.width/40, graph_widget.y + dp(40))
+                                size: (graph_widget.width * 0.95, graph_widget.height - dp(43))
+                            Button:
+                                text:'←'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_size: '24dp'
+                                size_hint: (None, None)
+                                size: '43dp', '43dp'
+                                x: graph_widget.x + graph_widget.width/2 - dp(53)
+                                y: graph_widget.y
+                                background_color: 0, 0, 0, 0
+                                color: BLUE
+                                on_press: graph_widget.on_left_arrow_press()
+                            Label:
+                                id: graph_label
+                                text: str(graph_widget.current_graph) + '/8'
+                                font_size: '13dp'
+                                size_hint: (None, None)
+                                size: '43dp', '43dp'
+                                valign: 'center'
+                                x: graph_widget.x + graph_widget.width/2 - dp(21)
+                                y: graph_widget.y
+                            Button:
+                                text:'→'
+                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_size: '24dp'
+                                size_hint: (None, None)
+                                size: '43dp', '43dp'
+                                x: graph_widget.x + graph_widget.width/2 + dp(10)
+                                y: graph_widget.y
+                                background_color: 0, 0, 0, 0
+                                color: BLUE
+                                on_press: graph_widget.on_right_arrow_press()
+        GridLayout:
+            id: right_grid
+            rows: 3
+            size_hint_x: 0.24
+            Label:
+                text:'Job List'
+                size_hint_y: None
+                padding: [0, '30dp']
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                color: WHITE
+                font_size: '21dp'
+                height: '40dp'
+                valign: 'center'
+            FG2ScrollView:
+                fg2_window: fg2_window
+                id: fg2_scroll
+                size_hint:(None,None)
+                height: right_grid.height - dp(80)
+                width: right_grid.width - dp(4)
+                bar_pos_y: 'right'
+                do_scroll_x: False
+                do_scroll_y: True
+            BlueButton:
+                disabled:  len(root.fg2_scroll.grid_layout.children) == 0 or (svg_checkbox.active == False and png_checkbox.active == False) or (gt1_checkbox.active == False and gt2_checkbox.active == False and gt3_checkbox.active == False and gt4_checkbox.active == False and gt5_checkbox.active == False and gt6_checkbox.active == False and gt7_checkbox.active == False and gt8_checkbox.active == False)
+                disabled_color: DARK_GREY
+                text: 'Export Plots'
+                size_hint:(None,None)
+                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_size: '15dp'
+                size: (right_grid.width - dp(4), '35dp')
+                on_release: root.export()
+    FloatLayout:
+        id: loading_layout
+        size_hint: (1, 1)
+        pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+        canvas.before:
+            Color:
+                rgba: 0, 0, 0, 0.4  # Grey color with 50% opacity
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        Label:
+            id: animation_widget
+            pos_hint: {'center_x': 0.5, 'center_y': 0.5}
+            size_hint: (0.2, 0.2)
+            text: 'Loading...'
+            font_size: '25dp'
+            font_name: root.app.resource_path('resources\\Inter.ttf')
+
+
+
+
+
+
+
+
+
+
+
+
+# =========================================================================================
+
+<BlueButton@Button>:
+    background_normal: ''
+    background_color: CLEAR
+    background_down: ''
+    border: CLEAR
+    color: DARK_GREY
+    canvas.before:
+        Color:
+            rgba: (self.state == 'normal' and self.disabled == False) and BLUE or GREY
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(7),]
+
+
+# =========================================================================================
+
+<BlankButton@Button>:
+    background_normal: ''
+    background_color: CLEAR
+    background_down: ''
+    border: CLEAR
+    color: BLUE
+    canvas.before:
+        Color:
+            rgba: (self.state == 'normal') and CLEAR or GREY
+        RoundedRectangle:
+            pos: self.x+dp(1.3), self.y+dp(1.3)
+            size: self.width-dp(2.6), self.height-dp(2.6)
+            radius: [dp(9),]
+
+
+
+
+
+
+
+# =========================================================================================
+
+<MySpinnerOption>:
+    background_normal: ''
+    background_color: CLEAR
+    background_down: ''
+    border: CLEAR
+    color: DARK_GREY
+    disabled_color: DARK_GREY
+    height: '27dp'
+    text_size: (self.width - dp(2.6), self.height)
+    valign: 'center'
+    halign: 'center'
+    shorten: True
+    disabled: self.text in self.parent.parent.attach_to.pf1_window.disabled_options if self.parent is not None and self.parent.parent.attach_to is not None and not self.parent.parent.attach_to.text == self.text else False
+    canvas.before:
+        Color:
+            rgba: BLUE if self.parent is not None and self.parent.parent.attach_to is not None and self.parent.parent.attach_to.text == self.text else BLUE_GREY_BLUE if not self.disabled else GREY_BLUE 
+        RoundedRectangle:
+            pos: self.pos
+            size: (self.width - dp(1.3), self.height - dp(1.3))
+            radius: [dp(5),]
+
+
+# =========================================================================================
+
+<BlankSpinner>:
+    deselect_may_exist: True
+    background_color: CLEAR
+    background_normal: ''
+    background_down: ''
+    border: CLEAR
+    color: DARK_GREY
+    disabled_color: DARK_GREY
+    font_size: '9dp'
+    option_cls: 'MySpinnerOption'
+    canvas.before:
+        Color:
+            rgba: (self.state == 'normal' and self.disabled == False) and BLUE or GREY
+        RoundedRectangle:
+            pos: self.x+dp(1.3), self.y+dp(1.3)
+            size: self.width-dp(2.6), self.height-dp(2.6)
+            radius: [dp(7),]
+
+
+# =========================================================================================
+
+<PF2SpinnerOption>:
+    background_normal: ''
+    background_color: CLEAR
+    background_down: ''
+    border: CLEAR
+    color: DARK_GREY
+    disabled_color: DARK_GREY
+    height: '27dp'
+    text_size: (self.width - dp(2.6), self.height)
+    valign: 'center'
+    halign: 'center'
+    shorten: True
+    canvas.before:
+        Color:
+            rgba: BLUE if self.parent is not None and self.parent.parent.attach_to is not None and self.parent.parent.attach_to.text == self.text else GREY_BLUE if not self.disabled else LIGHT_GREY 
+        RoundedRectangle:
+            pos: self.pos
+            size: (self.width - dp(1.3), self.height - dp(1.3))
+            radius: [dp(5),]
+
+
+# =========================================================================================
+
+<PF2BlankSpinner@Spinner>:
+    background_color: CLEAR
+    background_normal: ''
+    background_down: ''
+    border: CLEAR
+    color: DARK_GREY
+    disabled_color: DARK_GREY
+    font_size: '9dp'
+    option_cls: 'PF2SpinnerOption'
+    canvas.before:
+        Color:
+            rgba: (self.state == 'normal' and self.disabled == False) and BLUE or GREY
+        RoundedRectangle:
+            pos: self.x+dp(1.3), self.y+dp(1.3)
+            size: self.width-dp(2.6), self.height-dp(2.6)
+            radius: [dp(7),]
+
+
+
+
+
+
+
+# =========================================================================================
+
+<PF1ScrollView>:
+    size_hint: (1, 1)
+    grid_layout: grid
+    GridLayout:
+        id: grid
+        size_hint_y: None
+        height: max(self.minimum_height,root.height)
+        cols: 1
+        spacing: '3dp'
+
+
+# =========================================================================================
+
+<IP1ScrollView>:
+    size_hint: (1, 1)
+    grid_layout: grid
+    GridLayout:
+        id: grid
+        size_hint_y: None
+        height: max(self.minimum_height,root.height)
+        cols: 1
+        spacing: '3dp'
+
+
+# =========================================================================================
+
+<IP2ScrollView>:
+    size_hint: (1, 1)
+    grid_layout: grid
+    GridLayout:
+        id: grid
+        size_hint_y: None
+        height: max(self.minimum_height,root.height)
+        cols: 1
+        spacing: '3dp'
+
+
+# =========================================================================================
+
+<PS1ScrollView>:
+    size_hint: (1, 1)
+    grid_layout: grid
+    GridLayout:
+        id: grid
+        size_hint_y: None
+        height: max(self.minimum_height,root.height)
+        cols: 1
+        spacing: '3dp'
+
+
+# =========================================================================================
+
+<PS2ScrollView>:
+    size_hint: (1, 1)
+    grid_layout: grid
+    GridLayout:
+        id: grid
+        size_hint_y: None
+        height: max(self.minimum_height,root.height)
+        cols: 1
+        spacing: '3dp'
+
+
+# =========================================================================================
+
+<FG1ScrollView>:
+    size_hint: (1, 1)
+    grid_layout: grid
+    GridLayout:
+        id: grid
+        size_hint_y: None
+        height: max(self.minimum_height,root.height)
+        cols: 1
+        spacing: '3dp'
+
+
+# =========================================================================================
+
+<FG2ScrollView>:
+    size_hint: (1, 1)
+    grid_layout: grid
+    GridLayout:
+        id: grid
+        size_hint_y: None
+        height: max(self.minimum_height,root.height)
+        cols: 1
+        spacing: '3dp'
+
+
+
+
+
+
+
+# =========================================================================================
+
+<BackPopup>:
+    size_hint: 0.6, 0.4
+    auto_dismiss: False
+    title: 'Return to Main Menu and lose current job(s)' if self.screen != 'FG2' else 'Return to previous screen and lose any changes to job(s)'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Are you sure?'
+        BoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            Button:
+                text: 'Yes'
+                on_release: root.on_answer('yes')
+            Button:
+                text: 'No'
+                on_release: root.on_answer('no')
+
+
+# =========================================================================================
+
+<ContinuePopup>:
+    size_hint: 0.6, 0.4
+    auto_dismiss: False
+    title: 'Calculate Forces'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Are you sure?'
+        BoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            Button:
+                text: 'Yes'
+                on_release: root.on_answer('yes')
+            Button:
+                text: 'No'
+                on_release: root.on_answer('no')
+
+
+# =========================================================================================
+
+<TrackPopup>:
+    size_hint: 0.6, 0.4
+    auto_dismiss: False
+    title: 'Track Position'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Are you sure?'
+        BoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            Button:
+                text: 'Yes'
+                on_release: root.on_answer('yes')
+            Button:
+                text: 'No'
+                on_release: root.on_answer('no')
+
+
+# =========================================================================================
+
+<VerifyPopup>:
+    size_hint: 0.6, 0.4
+    auto_dismiss: False
+    title: 'Verify Positions'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            text: 'Are you sure?'
+        BoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            Button:
+                text: 'Yes'
+                on_release: root.on_answer('yes')
+            Button:
+                text: 'No'
+                on_release: root.on_answer('no')
+
+
+# =========================================================================================
+
+<ErrorPopup>:
+    error_label: error_label
+    size_hint: 0.6, 0.4
+    auto_dismiss: False
+    title: 'Invalid Data'
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: error_label
+        BoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            Button:
+                text: 'Okay'
+                on_release: root.on_answer('ok')
+
+
+# =========================================================================================
+
+<PF1SuccessPopup>:
+    size_hint: 0.6, 0.4
+    auto_dismiss: False
+    title: 'Files Saved'
+    success_label: success_label
+    succ_gen_button: succ_gen_button
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: success_label
+        BoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            Button:
+                text: 'Exit'
+                on_release: root.on_answer('exit')
+            Button:
+                id: succ_gen_button
+                text: 'Generate Plots'
+                on_release: root.on_answer('graphs')
+
+
+# =========================================================================================
+
+<FG2SuccessPopup>:
+    size_hint: 0.6, 0.4
+    auto_dismiss: False
+    title: 'Files Saved'
+    success_label: success_label
+    succ_gen_button: succ_gen_button
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: success_label
+        BoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            Button:
+                text: 'Exit'
+                on_release: root.on_answer('exit')
+            Button:
+                id: succ_gen_button
+                text: 'Generate Plots'
+                on_release: root.on_answer('graphs')
+
+
+# =========================================================================================
+
+<IP2SuccessPopup>:
+    size_hint: 0.6, 0.4
+    auto_dismiss: False
+    title: 'Files Saved'
+    success_label: success_label
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: success_label
+        BoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            Button:
+                text: 'Exit'
+                on_release: root.on_answer('exit')
+            Button:
+                text: 'Screen Positions'
+                on_release: root.on_answer('screen')
+
+
+# =========================================================================================
+
+<PS2SuccessPopup>:
+    size_hint: 0.6, 0.4
+    auto_dismiss: False
+    title: 'Files Saved'
+    success_label: success_label
+    BoxLayout:
+        orientation: 'vertical'
+        Label:
+            id: success_label
+        BoxLayout:
+            size_hint_y: None
+            height: dp(40)
+            Button:
+                text: 'Exit'
+                on_release: root.on_answer('exit')
+            Button:
+                text: 'Calculate Forces'
+                on_release: root.on_answer('forces')
+
+
+
+
+
+
+
+
+# =========================================================================================
+
+<PF1JobListBox>:
+    size_hint_x: 1
+    size_hint_y: None
+    height: '66dp'
+    name: 'temp'
+    date: None
+    file_location: None
+    background_normal: ''
+    is_selected: True
+    background_normal: ''
+    background_color: CLEAR
+    background_down: ''
+    border: CLEAR
+    font_name: root.app.resource_path('resources\\Inter.ttf')
+    canvas.before:
+        Color:
+            rgba: self.is_selected and BLUE or GREY_BLUE
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(8),]
+    Label:
+        text: 'Name: ' + str(root.name)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width - dp(50), dp(20))
+        pos: (root.x + dp(3), root.y + dp(47))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'File: ' + str(root.file_location).split('\\')[-1]
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(27))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'Date: ' + str(root.date)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(7))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Button:
+        text: '×'
+        font_size: '16dp'
+        background_color: CLEAR
+        background_normal: ''
+        color: DARK_GREY
+        size_hint: (None, None)
+        size: ('20dp', '20dp')
+        pos: (root.x + root.width - dp(20), root.y + root.height - dp(20))
+        on_press: root.parent.parent.on_x_btn(root)
+    Button:
+        background_color: CLEAR
+        size_hint: (None, None)
+        size: ('13dp', '20dp')
+        pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
+        on_press: root.on_open_btn('file')
+        Image:
+            source: root.app.resource_path('resources\\open_btn.png')
+            y: self.parent.y + dp(3)
+            x: self.parent.x
+            size: ('13dp',  '13dp')
+
+
+
+# =========================================================================================
+
+<FG1JobListBox>:
+    size_hint_x: 1
+    size_hint_y: None
+    height: '66dp'
+    name: 'temp2'
+    date: None
+    file_location: None
+    background_normal: ''
+    is_selected: True
+    background_normal: ''
+    background_color: CLEAR
+    background_down: ''
+    border: CLEAR
+    font_name: root.app.resource_path('resources\\Inter.ttf')
+    canvas.before:
+        Color:
+            rgba: self.is_selected and BLUE or GREY_BLUE
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(8),]
+    Label:
+        text: 'Name: ' + str(root.name)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width - dp(23), '20dp')
+        pos: (root.x + dp(3), root.y + dp(47))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'File: ' + str(root.file_location).split('\\')[-1]
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(27))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'Date: ' + str(root.date)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(7))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Button:
+        text: '×'
+        font_size: '16dp'
+        background_color: CLEAR
+        background_normal: ''
+        color: DARK_GREY
+        size_hint: (None, None)
+        size: ('20dp', '20dp')
+        pos: (root.x + root.width - dp(20), root.y + root.height - dp(20))
+        on_press: root.parent.parent.on_x_btn(root)
+    Button:
+        background_color: CLEAR
+        size_hint: (None, None)
+        size: ('13dp', '20dp')
+        pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
+        on_press: root.on_open_btn('file')
+        Image:
+            source: root.app.resource_path('resources\\open_btn.png')
+            y: self.parent.y + dp(3)
+            x: self.parent.x
+            size: ('13dp',  '13dp')
+
+
+# =========================================================================================
+
+<FG2JobListBox>:
+    size_hint_x: 1
+    size_hint_y: None
+    height: '66dp'
+    name: 'temp3'
+    date: None
+    file_location: None
+    background_normal: ''
+    is_selected: True
+    background_normal: ''
+    background_color: CLEAR
+    background_down: ''
+    border: CLEAR
+    font_name: root.app.resource_path('resources\\Inter.ttf')
+    canvas.before:
+        Color:
+            rgba: self.is_selected and BLUE or GREY_BLUE
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(8),]
+    Label:
+        text: 'Name: ' + str(root.name)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width - dp(23), '20dp')
+        pos: (root.x + dp(3), root.y + dp(47))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'File: ' + str(root.file_location).split('\\')[-1]
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(27))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'Date: ' + str(root.date)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(7))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Button:
+        text: '×'
+        font_size: '16dp'
+        background_color: CLEAR
+        background_normal: ''
+        color: DARK_GREY
+        size_hint: (None, None)
+        size: ('20dp', '20dp')
+        pos: (root.x + root.width - dp(20), root.y + root.height - dp(20))
+        on_press: root.parent.parent.on_x_btn(root)
+    Button:
+        background_color: CLEAR
+        size_hint: (None, None)
+        size: ('13dp', '20dp')
+        pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
+        on_press: root.on_open_btn('file')
+        Image:
+            source: root.app.resource_path('resources\\open_btn.png')
+            y: self.parent.y + dp(3)
+            x: self.parent.x
+            size: ('13dp',  '13dp')
+
+
+# =========================================================================================
+
+<PS2JobListBox>:
+    size_hint_x: 1
+    size_hint_y: None
+    height: '66dp'
+    name: 'temp'
+    date: None
+    file_location: None
+    background_normal: ''
+    is_selected: True
+    background_normal: ''
+    background_color: CLEAR
+    background_down: ''
+    border: CLEAR
+    font_name: root.app.resource_path('resources\\Inter.ttf')
+    canvas.before:
+        Color:
+            rgba: self.is_selected and BLUE or GREY_BLUE
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(8),]
+    Label:
+        text: 'Name: ' + str(root.name)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width - dp(23), '20dp')
+        pos: (root.x + dp(3), root.y + dp(47))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'File: ' + str(root.folder_location).split('\\')[-1]
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(27))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'Date: ' + str(root.date)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(7))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Button:
+        text: '×'
+        font_size: '16dp'
+        background_color: CLEAR
+        background_normal: ''
+        color: DARK_GREY
+        size_hint: (None, None)
+        size: ('20dp', '20dp')
+        pos: (root.x + root.width - dp(20), root.y + root.height - dp(20))
+        on_press: root.parent.parent.on_x_btn(root)
+    Button:
+        background_color: CLEAR
+        size_hint: (None, None)
+        size: ('13dp', '20dp')
+        pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
+        on_press: root.on_open_btn('folder')
+        Image:
+            source: root.app.resource_path('resources\\open_btn.png')
+            y: self.parent.y + dp(3)
+            x: self.parent.x
+            size: ('13dp',  '13dp')
+
+
+# =========================================================================================
+
+<IP1JobListBox>:
+    size_hint_x: 1
+    size_hint_y: None
+    height: '66dp'
+    name: 'temp'
+    date: None
+    file_location: None
+    background_normal: ''
+    is_selected: True
+    background_normal: ''
+    background_color: CLEAR
+    background_down: ''
+    border: CLEAR
+    font_name: root.app.resource_path('resources\\Inter.ttf')
+    canvas.before:
+        Color:
+            rgba: self.is_selected and BLUE or GREY_BLUE
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(8),]
+    Label:
+        text: 'Name:  ' + str(root.name)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width - dp(23), '20dp')
+        pos: (root.x + dp(3), root.y + dp(47))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'File:  ' + str(root.folder_location).split('\\')[-1]
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(27))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'Date:  ' + str(root.date)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(7))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Button:
+        text: '×'
+        font_size: '16dp'
+        background_color: CLEAR
+        background_normal: ''
+        color: DARK_GREY
+        size_hint: (None, None)
+        size: ('20dp', '20dp')
+        pos: (root.x + root.width - dp(20), root.y + root.height - dp(20))
+        on_press: root.parent.parent.on_x_btn(root)
+    Button:
+        background_color: CLEAR
+        size_hint: (None, None)
+        size: ('13dp', '20dp')
+        pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
+        on_press: root.on_open_btn('folder')
+        Image:
+            source: root.app.resource_path('resources\\open_btn.png')
+            y: self.parent.y + dp(3)
+            x: self.parent.x
+            size: ('13dp',  '13dp')
+
+
+# =========================================================================================
+
+<IP2JobListBox>:
+    size_hint_x: 1
+    size_hint_y: None
+    height: '66dp'
+    name: 'temp'
+    date: None
+    file_location: None
+    background_normal: ''
+    is_selected: True
+    background_normal: ''
+    background_color: CLEAR
+    background_down: ''
+    border: CLEAR
+    font_name: root.app.resource_path('resources\\Inter.ttf')
+    canvas.before:
+        Color:
+            rgba: self.is_selected and BLUE or GREY_BLUE
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(8),]
+    Label:
+        text: 'Name:  ' + str(root.name)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width - dp(23), '20dp')
+        pos: (root.x + dp(3), root.y + dp(47))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'File:  ' + str(root.folder_location).split('\\')[-1]
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(27))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'Date:  ' + str(root.date)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(7))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Button:
+        text: '×'
+        font_size: '16dp'
+        background_color: CLEAR
+        background_normal: ''
+        color: DARK_GREY
+        size_hint: (None, None)
+        size: ('20dp', '20dp')
+        pos: (root.x + root.width - dp(20), root.y + root.height - dp(20))
+        on_press: root.parent.parent.on_x_btn(root)
+    Button:
+        background_color: CLEAR
+        size_hint: (None, None)
+        size: ('13dp', '20dp')
+        pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
+        on_press: root.on_open_btn('folder')
+        Image:
+            source: root.app.resource_path('resources\\open_btn.png')
+            y: self.parent.y + dp(3)
+            x: self.parent.x
+            size: ('13dp',  '13dp')
+
+
+# =========================================================================================
+
+<PS1JobListBox>:
+    size_hint_x: 1
+    size_hint_y: None
+    height: '66dp'
+    name: 'temp'
+    date: None
+    file_location: None
+    background_normal: ''
+    is_selected: True
+    background_normal: ''
+    background_color: CLEAR
+    background_down: ''
+    border: CLEAR
+    font_name: root.app.resource_path('resources\\Inter.ttf')
+    canvas.before:
+        Color:
+            rgba: self.is_selected and BLUE or GREY_BLUE
+        RoundedRectangle:
+            pos: self.pos
+            size: self.size
+            radius: [dp(8),]
+    Label:
+        text: 'Name: ' + str(root.name)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width - dp(23), '20dp')
+        pos: (root.x + dp(3), root.y + dp(47))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'File: ' + str(root.folder_location).split('\\')[-1]
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(27))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Label:
+        text: 'Date: ' + str(root.date)
+        color: WHITE
+        size_hint: (None, None)
+        size: (root.width, '20dp')
+        pos: (root.x + dp(3), root.y + dp(7))
+        halign: 'left'
+        color: DARK_GREY
+        text_size: self.size
+        shorten: True
+    Button:
+        text: '×'
+        font_size: '16dp'
+        background_color: CLEAR
+        background_normal: ''
+        color: DARK_GREY
+        size_hint: (None, None)
+        size: ('20dp', '20dp')
+        pos: (root.x + root.width - dp(20), root.y + root.height - dp(20))
+        on_press: root.parent.parent.on_x_btn(root)
+    Button:
+        background_color: CLEAR
+        size_hint: (None, None)
+        size: ('13dp', '20dp')
+        pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
+        on_press: root.on_open_btn('folder')
+        Image:
+            source: root.app.resource_path('resources\\open_btn.png')
+            y: self.parent.y + dp(3)
+            x: self.parent.x
+            size: ('13dp',  '13dp')
+
+
+
+
+
+
+
+# =========================================================================================
+
+<StartPointImage>:
+    color: CLEAR if self.texture is None else WHITE
+
+
+# =========================================================================================
+
+<PillarTrackingImage>:
+    color: CLEAR if self.texture is None else WHITE
+
+
+# =========================================================================================
+
+<FloatInput>:
+    multiline: False
