@@ -94,7 +94,7 @@ WindowManager:
                     Label:
                         id: title_label
                         text: 'Pillar Centroid Tracker'
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         font_size: '43dp'
                         padding: ['13dp', 0]
                         size_hint: None, None
@@ -104,8 +104,8 @@ WindowManager:
                         pos_hint: {'x': 0, 'y': 0}
                     # version
                     Label:
-                        text: 'v1.0'
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        text: 'v1.1.1'
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         font_size: '24dp'
                         padding: ['7dp', 0]
                         size_hint: None, None
@@ -117,7 +117,7 @@ WindowManager:
                 # Subtitle
                 Label:
                     text: ' Haig Bishop,  hbi34@uclive.ac.nz,  University of Canterbury'
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     font_size: '12dp'
                     padding: ['13dp', 0]
                     size_hint_x: 1
@@ -141,11 +141,11 @@ WindowManager:
                     size_hint_y: 0.25
                     BlueButton:
                         id: btn_ip
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         text: 'Track Pillar Position' # 'Images → Position'
                         font_size: '35dp'
                         size_hint: (1, 0.9)
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         pos_hint: {'right': 1, 'top':1}
                         on_release: 
                             app.root.current = 'IP1'
@@ -154,7 +154,7 @@ WindowManager:
                     size_hint_y: 0.25
                     BlueButton:
                         id: btn_ps
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         font_size: '35dp'
                         text: 'Verify Predicted Positions' # 'Screen Positions'
                         size_hint: (1, 0.9)
@@ -166,7 +166,7 @@ WindowManager:
                     size_hint_y: 0.25
                     BlueButton:
                         id: btn_pf
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         text: 'Calculate Forces' # 'Position → Force'
                         font_size: '35dp'
                         size_hint: (1, 0.9)
@@ -178,7 +178,7 @@ WindowManager:
                     size_hint_y: 0.25
                     BlueButton:
                         id: btn_fg
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         font_size: '35dp'
                         text: 'Generate Plots' # 'Force → Plots'
                         size_hint: (1, 0.9)
@@ -193,7 +193,7 @@ WindowManager:
                     size_hint: (0.9, 0.975)
                     pos_hint: {'center_x':0.5, 'top':1}
                     fit_mode: 'cover'
-                    source: root.app.resource_path('resources\\example_image.png')
+                    source: root.app.resource_path('resources/example_image.png')
     # Whole screen float for the info screen
     FloatLayout:
         id: info_layout
@@ -242,7 +242,7 @@ WindowManager:
                         color: WHITE
                         padding: ['20dp', '20dp']
                         markup: True
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         font_size: '16dp'
 
 
@@ -293,7 +293,7 @@ WindowManager:
                 height: '40dp'
                 BlankButton:
                     text:'←'
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     font_size: '35dp'
                     padding: [0, '13dp']
                     size_hint_x: None
@@ -301,7 +301,7 @@ WindowManager:
                     on_release: 
                         root.on_back_btn()
                 Label:
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     text: 'Images → Positions (detect start point)'
                     font_size: '20dp'
                     padding: ['3dp', '2dp']
@@ -320,7 +320,7 @@ WindowManager:
                     BlueButton:
                         id: select_btn
                         size_hint:(None,None)
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         size: ('107dp', '33dp')
                         font_size: '12dp'
                         pos_hint: {'x':.095, 'y':.3}
@@ -334,7 +334,7 @@ WindowManager:
                         pos_hint: {'x':.095, 'y':0.06}
                         text: 'No folder(s) selected'
                         halign: 'left'
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         text_size: self.size
                         shorten: True
                         font_size: '11dp'
@@ -347,7 +347,7 @@ WindowManager:
                         Label:
                             text: 'Job Name:'
                             color: WHITE
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '16dp'
                             size_hint_x: 0.35
                         FloatLayout:
@@ -381,7 +381,7 @@ WindowManager:
                 text:'Job List'
                 size_hint_y: None
                 padding: [0, '30dp']
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 color: WHITE
                 font_size: '21dp'
                 height: '40dp'
@@ -401,7 +401,7 @@ WindowManager:
                 text: 'Detect Start Position'
                 size_hint:(None,None)
                 font_size: '15dp'
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 size: (right_grid.width - dp(4), '35dp')
                 on_release: root.detect()
     FloatLayout:
@@ -420,7 +420,7 @@ WindowManager:
             size_hint: (0.2, 0.2)
             text: 'Loading...'
             font_size: '25dp'
-            font_name: root.app.resource_path('resources\\Inter.ttf')
+            font_name: root.app.resource_path('resources/Inter.ttf')
 
 
 
@@ -461,7 +461,7 @@ WindowManager:
                 height: '40dp'
                 BlankButton:
                     text:'←'
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     font_size: '35dp'
                     padding: [0, '13dp']
                     size_hint_x: None
@@ -469,7 +469,7 @@ WindowManager:
                     on_release: 
                         root.on_back_btn()
                 Label:
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     text: 'Images → Positions (verify start point)'
                     font_size: '20dp'
                     padding: ['3dp', '2dp']
@@ -491,7 +491,7 @@ WindowManager:
                 Label:
                     id: saved_label
                     text: 'Image saved.'
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     color: WHITE
                     size_hint: None, None
                     pos_hint: {'x':0.03, 'y': 0.01}
@@ -512,7 +512,7 @@ WindowManager:
                 text:'Job List  '
                 size_hint_y: None
                 padding: [0, '30dp']
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 color: WHITE
                 font_size: '21dp'
                 height: '40dp'
@@ -531,7 +531,7 @@ WindowManager:
                 disabled_color: DARK_GREY
                 text: 'Track Position'
                 size_hint:(None,None)
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 font_size: '15dp'
                 size: (right_grid.width - dp(4), '35dp')
                 on_release: root.track()
@@ -551,7 +551,7 @@ WindowManager:
             size_hint: (0.2, 0.2)
             text: 'Loading...'
             font_size: '25dp'
-            font_name: root.app.resource_path('resources\\Inter.ttf')
+            font_name: root.app.resource_path('resources/Inter.ttf')
 
 
 
@@ -604,7 +604,7 @@ WindowManager:
                 height: '40dp'
                 BlankButton:
                     text:'←'
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     font_size: '35dp'
                     padding: [0, '13dp']
                     size_hint_x: None
@@ -612,7 +612,7 @@ WindowManager:
                     on_release: 
                         root.on_back_btn()
                 Label:
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     text: 'Screen Positions'
                     font_size: '20dp'
                     padding: ['3dp', '2dp']
@@ -636,7 +636,7 @@ WindowManager:
                         pos_hint: {'x':.095, 'y':.3}
                         text:'select folder(s)'
                         on_release: root.select_folder()
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                     Label:
                         id: location_label
                         color: WHITE
@@ -645,7 +645,7 @@ WindowManager:
                         pos_hint: {'x':.1, 'y':0.15}
                         text: 'No folder(s) selected'
                         halign: 'left'
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         text_size: self.size
                         shorten: True
                         font_size: '11dp'
@@ -658,7 +658,7 @@ WindowManager:
                         Label:
                             text: 'Job Name:'
                             color: WHITE
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '16dp'
                             size_hint_x: 0.35
                         FloatLayout:
@@ -685,7 +685,7 @@ WindowManager:
                         pos_hint: {'x':.095, 'y':.3}
                         text:'select file'
                         on_release: root.select_file()
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                     Label:
                         id: file_location_label
                         color: WHITE
@@ -694,7 +694,7 @@ WindowManager:
                         pos_hint: {'x':.1, 'y':0.07}
                         text: 'No file selected'
                         halign: 'left'
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         text_size: self.size
                         shorten: True
                         font_size: '11dp'
@@ -708,7 +708,7 @@ WindowManager:
                         Label:
                             id: label_x
                             text: 'Column x (pixels):'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             color: WHITE
                             size_hint_x: 1/2
                             size_hint_y: None
@@ -725,7 +725,7 @@ WindowManager:
                             y: label_x.y - dp(30)
                             size: ('143dp', '33dp')
                             text: 'select column'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '12dp'
                             on_text: root.select_columnx(self.text)
                             _on_selection: root.select_columnx
@@ -741,7 +741,7 @@ WindowManager:
                             size: ('143dp', '33dp')
                             color: DARK_GREY
                             disabled_color: DARK_GREY
-                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            font_name: root.app.resource_path('resources/DejaVuSans.ttf')
                             text: '▾  '
                             text_size: (self.width, self.height)
                             valign: 'center'
@@ -752,7 +752,7 @@ WindowManager:
                         Label:
                             id: label_y
                             text: 'Column y (pixels):'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             color: WHITE
                             size_hint_x: 1/2
                             size_hint_y: None
@@ -768,7 +768,7 @@ WindowManager:
                             y: label_y.y - dp(30)
                             size: ('143dp', '33dp')
                             font_size: '12dp'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             text: 'select column'
                             on_text: root.select_columny(self.text)
                             _on_selection: root.select_columny
@@ -784,7 +784,7 @@ WindowManager:
                             size: ('143dp', '33dp')
                             color: DARK_GREY
                             disabled_color: DARK_GREY
-                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            font_name: root.app.resource_path('resources/DejaVuSans.ttf')
                             text: '▾  '
                             text_size: (self.width, self.height)
                             valign: 'center'
@@ -795,7 +795,7 @@ WindowManager:
                         Label:
                             id: adjust_label
                             text: 'Adjust all jobs in bulk: '
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             color: WHITE
                             size_hint: None, None
                             pos_hint: {'x':0.05, 'center_y':9/10}
@@ -820,7 +820,7 @@ WindowManager:
                 text:'Job List'
                 size_hint_y: None
                 padding: [0, '30dp']
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 color: WHITE
                 font_size: '21dp'
                 height: '40dp'
@@ -838,7 +838,7 @@ WindowManager:
                 disabled:  len(root.ps1_scroll.grid_layout.children) == 0
                 disabled_color: DARK_GREY
                 text: 'Proceed'
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 size_hint:(None,None)
                 font_size: '15dp'
                 size: (right_grid.width - dp(4), '35dp')
@@ -886,7 +886,7 @@ WindowManager:
                 height: '40dp'
                 BlankButton:
                     text:'←'
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     font_size: '35dp'
                     padding: [0, '13dp']
                     size_hint_x: None
@@ -894,7 +894,7 @@ WindowManager:
                     on_release: 
                         root.on_back_btn()
                 Label:
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     text: 'Screen Positions'
                     font_size: '20dp'
                     padding: ['3dp', '2dp']
@@ -929,7 +929,7 @@ WindowManager:
                     Label:
                         id: saved_label
                         text: 'Image saved.'
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         color: WHITE
                         size_hint: None, None
                         pos_hint: {'x':0.03, 'center_y': 0.5}
@@ -942,7 +942,7 @@ WindowManager:
                         opacity: 0
                     Button:
                         text:'←'
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         font_size: '24dp'
                         size_hint: (None, None)
                         size: '40dp', '40dp'
@@ -960,7 +960,7 @@ WindowManager:
                     Button:
                         id: right_btn
                         text:'→'
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         font_size: '24dp'
                         size_hint: (None, None)
                         size: '40dp', '40dp'
@@ -971,7 +971,7 @@ WindowManager:
                     Label:
                         id: adjust_label
                         text: 'Adjust subsequent frames:  '
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         color: WHITE
                         size_hint: None, None
                         pos_hint: {'center_y': 0.5}
@@ -999,7 +999,7 @@ WindowManager:
             Label:
                 text:'Job List  '
                 size_hint_y: None
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 color: WHITE
                 font_size: '21dp'
                 height: '40dp'
@@ -1020,7 +1020,7 @@ WindowManager:
                 text: 'Verify Positions'
                 size_hint:(None,None)
                 font_size: '15dp'
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 size: (right_grid.width - dp(4), '35dp')
                 on_release: root.verify()
 
@@ -1081,7 +1081,7 @@ WindowManager:
                 height: '40dp'
                 BlankButton:
                     text:'←'
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     font_size: '35dp'
                     padding: [0, '13dp']
                     size_hint_x: None
@@ -1089,7 +1089,7 @@ WindowManager:
                     on_release: 
                         root.on_back_btn()
                 Label:
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     text: 'Positions → Forces'
                     font_size: '20dp'
                     padding: ['3dp', '2dp']
@@ -1113,7 +1113,7 @@ WindowManager:
                         font_size: '12dp'
                         pos_hint: {'x':.095, 'y':.3}
                         text:'select file(s)'
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         on_release: root.select_file()
                     Label:
                         id: location_label
@@ -1123,7 +1123,7 @@ WindowManager:
                         pos_hint: {'x':.095, 'y':0.06}
                         text: ' No file(s) selected'
                         halign: 'left'
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         text_size: self.size
                         shorten: True
                         font_size: '11dp'
@@ -1136,7 +1136,7 @@ WindowManager:
                         Label:
                             text: 'Job Name:'
                             color: WHITE
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '16dp'
                             size_hint_x: 0.35
                         FloatLayout:
@@ -1167,7 +1167,7 @@ WindowManager:
                                     color: WHITE
                                     size_hint: (1, 1)
                                     pos_hint: {'center_x':0.5, 'center_y':0.5}
-                                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                                    font_name: root.app.resource_path('resources/Inter.ttf')
                                 Button:
                                     background_color: CLEAR
                                     border: CLEAR
@@ -1183,11 +1183,11 @@ WindowManager:
                                     size: ('20dp', '20dp')
                                     pos_hint: {'center_y':0.5}
                                     x: diam_input_layout.x - dp(25)
-                                    background_normal: root.app.resource_path('resources\\reset_btn.png')
-                                    background_down: root.app.resource_path('resources\\reset_btn.png')
+                                    background_normal: root.app.resource_path('resources/reset_btn.png')
+                                    background_down: root.app.resource_path('resources/reset_btn.png')
                                     on_press: root.on_diam_reset_btn()
                                     Image:
-                                        source: root.app.resource_path('resources\\reset_btn.png')
+                                        source: root.app.resource_path('resources/reset_btn.png')
                                         y: self.parent.y + dp(3)
                                         x: self.parent.x + dp(3)
                                         size: ('13dp',  '13dp')
@@ -1208,7 +1208,7 @@ WindowManager:
                                 text: 'Pillar Height (µm)'
                                 color: WHITE
                                 size_hint_x: 0.78
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                             FloatLayout:
                                 size_hint_x: 0.22
                                 FloatInput:
@@ -1225,7 +1225,7 @@ WindowManager:
                                 text: 'Pillar Contact Height (µm)'
                                 color: WHITE
                                 size_hint_x: 0.78
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                             FloatLayout:
                                 size_hint_x: 0.22
                                 FloatInput:
@@ -1242,7 +1242,7 @@ WindowManager:
                                 text: 'Pixel:Micron Ratio'
                                 color: WHITE
                                 size_hint_x: 0.78
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                             FloatLayout:
                                 size_hint_x: 0.22
                                 FloatInput:
@@ -1259,7 +1259,7 @@ WindowManager:
                                 text: "Young's Modulus (MPa)"
                                 color: WHITE
                                 size_hint_x: 0.78
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                             FloatLayout:
                                 size_hint_x: 0.22
                                 FloatInput:
@@ -1276,7 +1276,7 @@ WindowManager:
                                 text: "Poisson's Ratio"
                                 color: WHITE
                                 size_hint_x: 0.78
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                             FloatLayout:
                                 size_hint_x: 0.22
                                 FloatInput:
@@ -1293,7 +1293,7 @@ WindowManager:
                                 text: 'Frame Frequency (fps)'
                                 color: WHITE
                                 size_hint_x: 0.78
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                             FloatLayout:
                                 size_hint_x: 0.22
                                 FloatInput:
@@ -1310,7 +1310,7 @@ WindowManager:
                         Label:
                             id: adjust_label
                             text: 'Adjust all jobs in bulk: '
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             color: WHITE
                             size_hint: None, None
                             pos_hint: {'x':0.05, 'center_y':13/14}
@@ -1328,7 +1328,7 @@ WindowManager:
                         Label:
                             id: label_x
                             text: 'Column x (pixels):'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             color: WHITE
                             size_hint_x: 1/2
                             size_hint_y: None
@@ -1344,7 +1344,7 @@ WindowManager:
                             pos_hint: {'center_x':0.25}
                             y: label_x.y - dp(37)
                             font_size: '12dp'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             height: '37dp'
                             text: 'select column'
                             on_text: root.select_columnx(self.text)
@@ -1361,7 +1361,7 @@ WindowManager:
                             height: '37dp'
                             color: DARK_GREY
                             disabled_color: DARK_GREY
-                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            font_name: root.app.resource_path('resources/DejaVuSans.ttf')
                             text: '▾ '
                             text_size: (self.width, self.height)
                             valign: 'center'
@@ -1370,7 +1370,7 @@ WindowManager:
                         Label:
                             id: label_y
                             text: 'Column y (pixels):'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             color: WHITE
                             size_hint_x: 1/2
                             size_hint_y: None
@@ -1386,7 +1386,7 @@ WindowManager:
                             font_size: '12dp'
                             y: label_y.y - dp(37)
                             height: '37dp'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             text: 'select column'
                             on_text: root.select_columny(self.text)
                             _on_selection: root.select_columny
@@ -1402,7 +1402,7 @@ WindowManager:
                             height: '37dp'
                             color: DARK_GREY
                             disabled_color: DARK_GREY
-                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            font_name: root.app.resource_path('resources/DejaVuSans.ttf')
                             text: '▾ '
                             text_size: (self.width, self.height)
                             valign: 'center'
@@ -1418,7 +1418,7 @@ WindowManager:
                 text:'Job List'
                 size_hint_y: None
                 padding: [0, '30dp']
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 color: WHITE
                 font_size: '21dp'
                 height: '40dp'
@@ -1436,7 +1436,7 @@ WindowManager:
                 disabled:  len(root.pf1_scroll.grid_layout.children) == 0
                 disabled_color: DARK_GREY
                 text: 'Convert to Forces'
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 size_hint:(None,None)
                 font_size: '15dp'
                 size: (right_grid.width - dp(4), '35dp')
@@ -1497,7 +1497,7 @@ WindowManager:
                 height: '40dp'
                 BlankButton:
                     text:'←'
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     font_size: '35dp'
                     padding: [0, '13dp']
                     size_hint_x: None
@@ -1505,7 +1505,7 @@ WindowManager:
                     on_release: 
                         root.on_back_btn()
                 Label:
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     text: 'Forces → Plots'
                     font_size: '20dp'
                     padding: ['3dp', '2dp']
@@ -1528,7 +1528,7 @@ WindowManager:
                         font_size: '12dp'
                         pos_hint: {'x':.095, 'y':.3}
                         text:'select file(s)'
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         on_release: root.select_file()
                     Label:
                         id: location_label
@@ -1538,7 +1538,7 @@ WindowManager:
                         pos_hint: {'x':.095, 'y':0.06}
                         text: 'No file(s) selected'
                         halign: 'left'
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         text_size: self.size
                         shorten: True
                         font_size: '11dp'
@@ -1551,7 +1551,7 @@ WindowManager:
                         Label:
                             text: 'Job Name:'
                             color: WHITE
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '16dp'
                             size_hint_x: 0.3
                         FloatLayout:
@@ -1577,7 +1577,7 @@ WindowManager:
                         Label:
                             id: adjust_label
                             text: 'Adjust all jobs in bulk: '
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             color: WHITE
                             size_hint: None, None
                             pos_hint: {'x':0.05, 'center_y':11/20}
@@ -1596,7 +1596,7 @@ WindowManager:
                         Label:
                             id: label_x
                             text: 'Column x (µm):'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '12dp'
                             color: WHITE
                             size_hint_x: 1/4
@@ -1614,7 +1614,7 @@ WindowManager:
                             y: label_x.y - dp(23)
                             height: '27dp'
                             text: 'select column'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             on_text: root.select_columnx(self.text)
                             _on_selection: root.select_columnx
                             text_size: (self.width - dp(17), self.height)
@@ -1630,7 +1630,7 @@ WindowManager:
                             height: '27dp'
                             color: DARK_GREY
                             disabled_color: DARK_GREY
-                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            font_name: root.app.resource_path('resources/DejaVuSans.ttf')
                             text: '▾ '
                             text_size: (self.width, self.height)
                             valign: 'center'
@@ -1640,7 +1640,7 @@ WindowManager:
                         Label:
                             id: label_y
                             text: 'Column y (µm):'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '12dp'
                             color: WHITE
                             size_hint_x: 1/4
@@ -1656,7 +1656,7 @@ WindowManager:
                             pos_hint: {'center_x':6/16}
                             y: label_y.y - dp(23)
                             height: '27dp'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             text: 'select column'
                             on_text: root.select_columny(self.text)
                             _on_selection: root.select_columny
@@ -1673,7 +1673,7 @@ WindowManager:
                             height: '27dp'
                             color: DARK_GREY
                             disabled_color: DARK_GREY
-                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            font_name: root.app.resource_path('resources/DejaVuSans.ttf')
                             text: '▾ '
                             text_size: (self.width, self.height)
                             valign: 'center'
@@ -1682,7 +1682,7 @@ WindowManager:
                         Label:
                             id: label_t
                             text: 'Column Time (sec):'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '12dp'
                             color: WHITE
                             size_hint_x: 1/4
@@ -1699,7 +1699,7 @@ WindowManager:
                             pos_hint: {'center_x':10/16}
                             y: label_t.y - dp(23)
                             height: '27dp'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             text: 'select column'
                             on_text: root.select_columnt(self.text)
                             _on_selection: root.select_columnt
@@ -1716,7 +1716,7 @@ WindowManager:
                             height: '27dp'
                             color: DARK_GREY
                             disabled_color: DARK_GREY
-                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            font_name: root.app.resource_path('resources/DejaVuSans.ttf')
                             text: '▾ '
                             text_size: (self.width, self.height)
                             valign: 'center'
@@ -1725,7 +1725,7 @@ WindowManager:
                         Label:
                             id: label_tf
                             text: 'Column Total Force (µN):'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '12dp'
                             color: WHITE
                             size_hint_x: 1/4
@@ -1742,7 +1742,7 @@ WindowManager:
                             y: label_tf.y - dp(23)
                             height: '27dp'
                             text: 'select column'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             on_text: root.select_columntf(self.text)
                             _on_selection: root.select_columntf
                             text_size: (self.width - dp(17), self.height)
@@ -1758,7 +1758,7 @@ WindowManager:
                             height: '27dp'
                             color: DARK_GREY
                             disabled_color: DARK_GREY
-                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            font_name: root.app.resource_path('resources/DejaVuSans.ttf')
                             text: '▾ '
                             text_size: (self.width, self.height)
                             valign: 'center'
@@ -1767,7 +1767,7 @@ WindowManager:
                         Label:
                             id: label_xf
                             text: 'Column x Force (µN):'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '12dp'
                             color: WHITE
                             size_hint_x: 1/4
@@ -1784,7 +1784,7 @@ WindowManager:
                             y: label_xf.y - dp(23)
                             height: '27dp'
                             text: 'select column'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             on_text: root.select_columnxf(self.text)
                             _on_selection: root.select_columnxf
                             text_size: (self.width - dp(17), self.height)
@@ -1800,7 +1800,7 @@ WindowManager:
                             height: '27dp'
                             color: DARK_GREY
                             disabled_color: DARK_GREY
-                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            font_name: root.app.resource_path('resources/DejaVuSans.ttf')
                             text: '▾ '
                             text_size: (self.width, self.height)
                             valign: 'center'
@@ -1809,7 +1809,7 @@ WindowManager:
                         Label:
                             id: label_yf
                             text: 'Column y Force (µN):'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '12dp'
                             color: WHITE
                             size_hint_x: 1/4
@@ -1826,7 +1826,7 @@ WindowManager:
                             y: label_yf.y - dp(23)
                             height: '27dp'
                             text: 'select column'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             on_text: root.select_columnyf(self.text)
                             _on_selection: root.select_columnyf
                             text_size: (self.width - dp(17), self.height)
@@ -1842,7 +1842,7 @@ WindowManager:
                             height: '27dp'
                             color: DARK_GREY
                             disabled_color: DARK_GREY
-                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            font_name: root.app.resource_path('resources/DejaVuSans.ttf')
                             text: '▾ '
                             text_size: (self.width, self.height)
                             valign: 'center'
@@ -1851,7 +1851,7 @@ WindowManager:
                         Label:
                             id: label_dfx
                             text: 'Column Δx Force (µN):'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '12dp'
                             color: WHITE
                             size_hint_x: 1/4
@@ -1868,7 +1868,7 @@ WindowManager:
                             y: label_dfx.y - dp(23)
                             height: '27dp'
                             text: 'select column'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             on_text: root.select_columndfx(self.text)
                             _on_selection: root.select_columndfx
                             text_size: (self.width - dp(17), self.height)
@@ -1884,7 +1884,7 @@ WindowManager:
                             height: '27dp'
                             color: DARK_GREY
                             disabled_color: DARK_GREY
-                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            font_name: root.app.resource_path('resources/DejaVuSans.ttf')
                             text: '▾ '
                             text_size: (self.width, self.height)
                             valign: 'center'
@@ -1893,7 +1893,7 @@ WindowManager:
                         Label:
                             id: label_dfy
                             text: 'Column Δy Force (µN):'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '12dp'
                             color: WHITE
                             size_hint_x: 1/4
@@ -1910,7 +1910,7 @@ WindowManager:
                             y: label_dfy.y - dp(23)
                             height: '27dp'
                             text: 'select column'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             on_text: root.select_columndfy(self.text)
                             _on_selection: root.select_columndfy
                             text_size: (self.width - dp(17), self.height)
@@ -1926,7 +1926,7 @@ WindowManager:
                             height: '27dp'
                             color: DARK_GREY
                             disabled_color: DARK_GREY
-                            font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                            font_name: root.app.resource_path('resources/DejaVuSans.ttf')
                             text: '▾ '
                             text_size: (self.width, self.height)
                             valign: 'center'
@@ -1941,7 +1941,7 @@ WindowManager:
             Label:
                 text:'Job List  '
                 size_hint_y: None
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 color: WHITE
                 font_size: '21dp'
                 height: '40dp'
@@ -1958,7 +1958,7 @@ WindowManager:
             BlueButton:
                 disabled:  len(root.fg1_scroll.grid_layout.children) == 0
                 disabled_color: DARK_GREY
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 text: 'Generate Plots'
                 size_hint:(None,None)
                 font_size: '15dp'
@@ -2030,7 +2030,7 @@ WindowManager:
                 height: '40dp'
                 BlankButton:
                     text:'←'
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     font_size: '35dp'
                     padding: [0, '13dp']
                     size_hint_x: None
@@ -2038,7 +2038,7 @@ WindowManager:
                     on_release: 
                         root.on_back_btn()
                 Label:
-                    font_name: root.app.resource_path('resources\\Inter.ttf')
+                    font_name: root.app.resource_path('resources/Inter.ttf')
                     text: 'Forces → Plots'
                     font_size: '20dp'
                     padding: ['3dp', '2dp']
@@ -2062,7 +2062,7 @@ WindowManager:
                         pos_hint: {'x':0.05, 'y':0.17}
                         text: ' No file(s) selected'
                         halign: 'left'
-                        font_name: root.app.resource_path('resources\\Inter.ttf')
+                        font_name: root.app.resource_path('resources/Inter.ttf')
                         text_size: self.size
                         shorten: True
                         font_size: '11dp'
@@ -2075,7 +2075,7 @@ WindowManager:
                         Label:
                             text: 'Job Name:'
                             color: WHITE
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '16dp'
                             size_hint_x: 0.35
                         FloatLayout:
@@ -2103,7 +2103,7 @@ WindowManager:
                             Label:
                                 text: 'Title:'
                                 color: WHITE
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 size_hint: 0.3, 1
                                 pos_hint: {'x':0.05, 'center_y':.5}
                             TextInput:
@@ -2123,7 +2123,7 @@ WindowManager:
                             Label:
                                 text: 'x-Title:'
                                 color: WHITE
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 size_hint: 0.3, 1
                                 pos_hint: {'x':0.05, 'center_y':.5}
                             TextInput:
@@ -2143,7 +2143,7 @@ WindowManager:
                             Label:
                                 text: 'y-Title:'
                                 color: WHITE
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 size_hint: 0.3, 1
                                 pos_hint: {'x':0.05, 'center_y':.5}
                             TextInput:
@@ -2164,7 +2164,7 @@ WindowManager:
                             Label:
                                 id: adjust_label
                                 text: 'Adjust all jobs in bulk: '
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint: 0.75, 1
                                 text_size: (self.width, self.height)
@@ -2176,7 +2176,7 @@ WindowManager:
                         # GRAPH TYPES
                         Label:
                             text: 'Plots to Export'
-                            font_name: root.app.resource_path('resources\\Inter.ttf')
+                            font_name: root.app.resource_path('resources/Inter.ttf')
                             font_size: '20dp'
                             color: WHITE
                             size_hint_y: 12/90
@@ -2191,7 +2191,7 @@ WindowManager:
                             Label:
                                 id: graph_type_1_label
                                 text: 'Total Force (1)'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint: 0.4, 1
                                 text_size: (self.width, self.height)
@@ -2204,7 +2204,7 @@ WindowManager:
                             Label:
                                 id: graph_type_2_label
                                 text: 'Force x & y (2)'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint: 0.4, 1
                                 text_size: (self.width, self.height)
@@ -2221,7 +2221,7 @@ WindowManager:
                             Label:
                                 id: graph_type_3_label
                                 text: 'Force x (3)'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint: 0.4, 1
                                 text_size: (self.width, self.height)
@@ -2234,7 +2234,7 @@ WindowManager:
                             Label:
                                 id: graph_type_4_label
                                 text: 'Force y (4)'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint: 0.4, 1
                                 text_size: (self.width, self.height)
@@ -2251,7 +2251,7 @@ WindowManager:
                             Label:
                                 id: graph_type_5_label
                                 text: 'Position x (5)'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint: 0.4, 1
                                 text_size: (self.width, self.height)
@@ -2264,7 +2264,7 @@ WindowManager:
                             Label:
                                 id: graph_type_6_label
                                 text: 'Position y (6)'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint: 0.4, 1
                                 text_size: (self.width, self.height)
@@ -2281,7 +2281,7 @@ WindowManager:
                             Label:
                                 id: graph_type_7_label
                                 text: 'Δ Force x (7)'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint: 0.4, 1
                                 text_size: (self.width, self.height)
@@ -2294,7 +2294,7 @@ WindowManager:
                             Label:
                                 id: graph_type_8_label
                                 text: 'Δ Force y (8)'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint: 0.4, 1
                                 text_size: (self.width, self.height)
@@ -2314,7 +2314,7 @@ WindowManager:
                             Label:
                                 id: label_plot_type
                                 text: 'Plot Type:'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint_x: 0.3
                             FloatLayout:
@@ -2329,7 +2329,7 @@ WindowManager:
                                 size_hint_y: None
                                 height: '40dp'
                                 text: 'Scatter'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 on_text: root.select_plot_type(self.text)
                                 text_size: (self.width - dp(17), self.height)
                                 valign: 'center'
@@ -2345,7 +2345,7 @@ WindowManager:
                                     size: dropdown_plot.size
                                     color: DARK_GREY
                                     disabled_color: DARK_GREY
-                                    font_name: root.app.resource_path('resources\\DejaVuSans.ttf')
+                                    font_name: root.app.resource_path('resources/DejaVuSans.ttf')
                                     text: '▾  '
                                     text_size: (self.width, self.height)
                                     valign: 'center'
@@ -2357,7 +2357,7 @@ WindowManager:
                             Label:
                                 id: svg_label
                                 text: 'Export svg: '
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint: 3/8, 1
                                 text_size: (self.width, self.height)
@@ -2370,7 +2370,7 @@ WindowManager:
                             Label:
                                 id: png_label
                                 text: 'Export png: '
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint: 3/8, 1
                                 text_size: (self.width, self.height)
@@ -2387,7 +2387,7 @@ WindowManager:
                             Label:
                                 id: adjust_label
                                 text: 'y-axis min:'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint: 0.35, 1
                                 text_size: (self.width, self.height)
@@ -2407,7 +2407,7 @@ WindowManager:
                             Label:
                                 id: adjust_label
                                 text: 'y-axis max:'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 color: WHITE
                                 size_hint: 0.35, 1
                                 text_size: (self.width, self.height)
@@ -2437,7 +2437,7 @@ WindowManager:
                                 size: (graph_widget.width * 0.95, graph_widget.height - dp(43))
                             Button:
                                 text:'←'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 font_size: '24dp'
                                 size_hint: (None, None)
                                 size: '43dp', '43dp'
@@ -2457,7 +2457,7 @@ WindowManager:
                                 y: graph_widget.y
                             Button:
                                 text:'→'
-                                font_name: root.app.resource_path('resources\\Inter.ttf')
+                                font_name: root.app.resource_path('resources/Inter.ttf')
                                 font_size: '24dp'
                                 size_hint: (None, None)
                                 size: '43dp', '43dp'
@@ -2474,7 +2474,7 @@ WindowManager:
                 text:'Job List'
                 size_hint_y: None
                 padding: [0, '30dp']
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 color: WHITE
                 font_size: '21dp'
                 height: '40dp'
@@ -2493,7 +2493,7 @@ WindowManager:
                 disabled_color: DARK_GREY
                 text: 'Export Plots'
                 size_hint:(None,None)
-                font_name: root.app.resource_path('resources\\Inter.ttf')
+                font_name: root.app.resource_path('resources/Inter.ttf')
                 font_size: '15dp'
                 size: (right_grid.width - dp(4), '35dp')
                 on_release: root.export()
@@ -2513,7 +2513,7 @@ WindowManager:
             size_hint: (0.2, 0.2)
             text: 'Loading...'
             font_size: '25dp'
-            font_name: root.app.resource_path('resources\\Inter.ttf')
+            font_name: root.app.resource_path('resources/Inter.ttf')
 
 
 
@@ -2970,7 +2970,7 @@ WindowManager:
     background_color: CLEAR
     background_down: ''
     border: CLEAR
-    font_name: root.app.resource_path('resources\\Inter.ttf')
+    font_name: root.app.resource_path('resources/Inter.ttf')
     canvas.before:
         Color:
             rgba: self.is_selected and BLUE or GREY_BLUE
@@ -2989,7 +2989,7 @@ WindowManager:
         text_size: self.size
         shorten: True
     Label:
-        text: 'File: ' + str(root.file_location).split('\\')[-1]
+        text: 'File: ' + str(root.file_location).split('/')[-1]
         color: WHITE
         size_hint: (None, None)
         size: (root.width, '20dp')
@@ -3025,7 +3025,7 @@ WindowManager:
         pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
         on_press: root.on_open_btn('file')
         Image:
-            source: root.app.resource_path('resources\\open_btn.png')
+            source: root.app.resource_path('resources/open_btn.png')
             y: self.parent.y + dp(3)
             x: self.parent.x
             size: ('13dp',  '13dp')
@@ -3047,7 +3047,7 @@ WindowManager:
     background_color: CLEAR
     background_down: ''
     border: CLEAR
-    font_name: root.app.resource_path('resources\\Inter.ttf')
+    font_name: root.app.resource_path('resources/Inter.ttf')
     canvas.before:
         Color:
             rgba: self.is_selected and BLUE or GREY_BLUE
@@ -3066,7 +3066,7 @@ WindowManager:
         text_size: self.size
         shorten: True
     Label:
-        text: 'File: ' + str(root.file_location).split('\\')[-1]
+        text: 'File: ' + str(root.file_location).split('/')[-1]
         color: WHITE
         size_hint: (None, None)
         size: (root.width, '20dp')
@@ -3102,7 +3102,7 @@ WindowManager:
         pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
         on_press: root.on_open_btn('file')
         Image:
-            source: root.app.resource_path('resources\\open_btn.png')
+            source: root.app.resource_path('resources/open_btn.png')
             y: self.parent.y + dp(3)
             x: self.parent.x
             size: ('13dp',  '13dp')
@@ -3123,7 +3123,7 @@ WindowManager:
     background_color: CLEAR
     background_down: ''
     border: CLEAR
-    font_name: root.app.resource_path('resources\\Inter.ttf')
+    font_name: root.app.resource_path('resources/Inter.ttf')
     canvas.before:
         Color:
             rgba: self.is_selected and BLUE or GREY_BLUE
@@ -3142,7 +3142,7 @@ WindowManager:
         text_size: self.size
         shorten: True
     Label:
-        text: 'File: ' + str(root.file_location).split('\\')[-1]
+        text: 'File: ' + str(root.file_location).split('/')[-1]
         color: WHITE
         size_hint: (None, None)
         size: (root.width, '20dp')
@@ -3178,7 +3178,7 @@ WindowManager:
         pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
         on_press: root.on_open_btn('file')
         Image:
-            source: root.app.resource_path('resources\\open_btn.png')
+            source: root.app.resource_path('resources/open_btn.png')
             y: self.parent.y + dp(3)
             x: self.parent.x
             size: ('13dp',  '13dp')
@@ -3199,7 +3199,7 @@ WindowManager:
     background_color: CLEAR
     background_down: ''
     border: CLEAR
-    font_name: root.app.resource_path('resources\\Inter.ttf')
+    font_name: root.app.resource_path('resources/Inter.ttf')
     canvas.before:
         Color:
             rgba: self.is_selected and BLUE or GREY_BLUE
@@ -3218,7 +3218,7 @@ WindowManager:
         text_size: self.size
         shorten: True
     Label:
-        text: 'File: ' + str(root.folder_location).split('\\')[-1]
+        text: 'File: ' + str(root.folder_location).split('/')[-1]
         color: WHITE
         size_hint: (None, None)
         size: (root.width, '20dp')
@@ -3254,7 +3254,7 @@ WindowManager:
         pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
         on_press: root.on_open_btn('folder')
         Image:
-            source: root.app.resource_path('resources\\open_btn.png')
+            source: root.app.resource_path('resources/open_btn.png')
             y: self.parent.y + dp(3)
             x: self.parent.x
             size: ('13dp',  '13dp')
@@ -3275,7 +3275,7 @@ WindowManager:
     background_color: CLEAR
     background_down: ''
     border: CLEAR
-    font_name: root.app.resource_path('resources\\Inter.ttf')
+    font_name: root.app.resource_path('resources/Inter.ttf')
     canvas.before:
         Color:
             rgba: self.is_selected and BLUE or GREY_BLUE
@@ -3294,7 +3294,7 @@ WindowManager:
         text_size: self.size
         shorten: True
     Label:
-        text: 'File:  ' + str(root.folder_location).split('\\')[-1]
+        text: 'File:  ' + str(root.folder_location).split('/')[-1]
         color: WHITE
         size_hint: (None, None)
         size: (root.width, '20dp')
@@ -3330,7 +3330,7 @@ WindowManager:
         pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
         on_press: root.on_open_btn('folder')
         Image:
-            source: root.app.resource_path('resources\\open_btn.png')
+            source: root.app.resource_path('resources/open_btn.png')
             y: self.parent.y + dp(3)
             x: self.parent.x
             size: ('13dp',  '13dp')
@@ -3351,7 +3351,7 @@ WindowManager:
     background_color: CLEAR
     background_down: ''
     border: CLEAR
-    font_name: root.app.resource_path('resources\\Inter.ttf')
+    font_name: root.app.resource_path('resources/Inter.ttf')
     canvas.before:
         Color:
             rgba: self.is_selected and BLUE or GREY_BLUE
@@ -3370,7 +3370,7 @@ WindowManager:
         text_size: self.size
         shorten: True
     Label:
-        text: 'File:  ' + str(root.folder_location).split('\\')[-1]
+        text: 'File:  ' + str(root.folder_location).split('/')[-1]
         color: WHITE
         size_hint: (None, None)
         size: (root.width, '20dp')
@@ -3406,7 +3406,7 @@ WindowManager:
         pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
         on_press: root.on_open_btn('folder')
         Image:
-            source: root.app.resource_path('resources\\open_btn.png')
+            source: root.app.resource_path('resources/open_btn.png')
             y: self.parent.y + dp(3)
             x: self.parent.x
             size: ('13dp',  '13dp')
@@ -3427,7 +3427,7 @@ WindowManager:
     background_color: CLEAR
     background_down: ''
     border: CLEAR
-    font_name: root.app.resource_path('resources\\Inter.ttf')
+    font_name: root.app.resource_path('resources/Inter.ttf')
     canvas.before:
         Color:
             rgba: self.is_selected and BLUE or GREY_BLUE
@@ -3446,7 +3446,7 @@ WindowManager:
         text_size: self.size
         shorten: True
     Label:
-        text: 'File: ' + str(root.folder_location).split('\\')[-1]
+        text: 'File: ' + str(root.folder_location).split('/')[-1]
         color: WHITE
         size_hint: (None, None)
         size: (root.width, '20dp')
@@ -3482,7 +3482,7 @@ WindowManager:
         pos: (root.x + root.width - dp(33), root.y + root.height - dp(20))
         on_press: root.on_open_btn('folder')
         Image:
-            source: root.app.resource_path('resources\\open_btn.png')
+            source: root.app.resource_path('resources/open_btn.png')
             y: self.parent.y + dp(3)
             x: self.parent.x
             size: ('13dp',  '13dp')

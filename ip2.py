@@ -61,7 +61,7 @@ import re
 from subprocess import Popen as p_open
 
 # Get the location of the overlay .png file
-AXIS_OVERLAY_LOC = resource_path("resources\\axis_overlay.png")
+AXIS_OVERLAY_LOC = resource_path("resources/axis_overlay.png")
 
 
 class IP2Window(Screen):
@@ -389,7 +389,7 @@ class IP2JobListBox(Button):
         if file_or_folder == "file":
             # Use the path for the directory containing the file
             # Find last slash
-            s = str(self.file_location).rfind("\\") + 1
+            s = str(self.file_location).rfind("/") + 1
             # E.g. 'C:\Desktop\folder\'
             path = str(self.file_location)[:s]
         elif file_or_folder == "folder":
@@ -648,7 +648,7 @@ class StartPointImage(Image):
         - formats the file name to include the time
         - saves as the same file type"""
         # Find indicies for the last slash and the last dot
-        slash_index = max([image_loc.rfind("\\"), image_loc.rfind("/")])
+        slash_index = max([image_loc.rfind("/"), image_loc.rfind("/")])
         dot_index = image_loc.rfind(".")
         # Get the folder location
         folder = image_loc[: slash_index + 1]  # 'C:/Desktop/folder/'

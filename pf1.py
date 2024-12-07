@@ -21,6 +21,7 @@ from kivy.uix.scrollview import ScrollView
 from kivy.uix.screenmanager import Screen
 
 # Import modules for dealing with files
+from platform import platform
 from os.path import getctime
 from datetime import datetime
 from plyer import filechooser
@@ -29,6 +30,7 @@ import csv
 import os
 import xml.etree.ElementTree as et
 from subprocess import Popen as p_open
+from AppKit import NSOpenPanel
 
 
 # Set default force calculation parameters
@@ -234,15 +236,27 @@ class PF1Window(Screen):
         """called when [select file(s)] button is pressed
         - opens the file select window
         - selection is sent to self.selected()"""
-        # Only allow selection of csv or xml
-        filters = [("CSV files", "*.csv"), ("XML files", "*.xml")]
-        # Open file selector window - send selection to self.selected
-        filechooser.open_file(
-            on_selection=self.selected,
-            title="Select file(s)",
-            filters=filters,
-            multiple=True,
-        )
+        if "mac" in platform():
+            # Use NSOpenPanel directly via PyObjC for macOS
+            panel = NSOpenPanel.alloc().init()
+            panel.setCanChooseDirectories_(False)
+            panel.setCanChooseFiles_(True)
+            panel.setAllowsMultipleSelection_(True)
+            panel.setAllowedFileTypes_(["csv", "xml"])  # Allow only CSV and XML files
+            
+            if panel.runModal():  # Show dialog and check if user clicked OK
+                selection = list(panel.URLs())
+                paths = [url.path() for url in selection]
+                self.selected(paths)
+        else:
+            # Use plyer for other platforms
+            filters = [("CSV files", "*.csv"), ("XML files", "*.xml")]
+            filechooser.open_file(
+                on_selection=self.selected,
+                title="Select file(s)",
+                filters=filters,
+                multiple=True,
+            )
 
     def selected(self, selection):
         """receives selection from selector window
@@ -679,7 +693,7 @@ class PF1JobListBox(Button):
         if file_or_folder == "file":
             # Use the path for the directory containing the file
             # Find last slash
-            s = str(self.file_location).rfind("\\") + 1
+            s = str(self.file_location).rfind("/") + 1
             # E.g. 'C:\Desktop\folder\'
             path = str(self.file_location)[:s]
         elif file_or_folder == "folder":

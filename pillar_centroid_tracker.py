@@ -1,5 +1,5 @@
 """
-Program: Pillar Centroid Tracker (Version 1.1.0)
+Program: Pillar Centroid Tracker (Version 1.1.1)
 Description:
 - semi-automated tracking of pillar position across a series of images
 - semi-automated conversion of pillar tracking data to force values 
@@ -7,15 +7,15 @@ Description:
     Tayagui et al., "An elastomeric micropillar platform for the study of protrusive forces in hyphal invasion", 
     Lab on a Chip, Vol. 17, No.21, pp. 3643-3653, 2017.
 Author: Haig Bishop (hbi34@uclive.ac.nz)
-Date: 14/01/2024
+Date: 07/12/2024
 Version Description:
-- fixed size of GUI elements on different dpi screens
+- MacOS compatibility (may have broken Windows.. oopsie daisy)
 """
 
 # Import os and sys
 import os
 
-# Stops debug messages - alsoprevents an error after .exe packaging
+# Stops debug messages (to prevent issues when packaging as .exe or .dmg)
 # os.environ["KIVY_NO_CONSOLELOG"] = "1"
 
 # Import kivy and make sure that the version is at least 2.2.0
@@ -108,7 +108,7 @@ DEFAULT_TITLES = {
     ("y_t", 8): "Δ Force [µN]",
 }
 # Info page text
-INFO_FILE_POS = resource_path("resources\\info_page_text.txt")
+INFO_FILE_POS = resource_path("resources/info_page_text.txt")
 
 
 class WindowManager(ScreenManager):
@@ -206,7 +206,7 @@ class PCTApp(App):
         # Label window
         self.title = "Pillar Centroid Tracker"
         # Set app icon
-        self.icon = resource_path("resources\\icon.png")
+        self.icon = resource_path("resources/icon.png")
         # Bind the file drop call
         Window.bind(on_drop_file=self._on_file_drop)
         # Get a reference to the app

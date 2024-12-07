@@ -5,6 +5,7 @@ Author: Haig Bishop (hbi34@uclive.ac.nz)
 """
 
 # Import local modules
+from platform import platform
 from popup_elements import BackPopup, ErrorPopup
 from file_management import (
     folder_name,
@@ -27,6 +28,7 @@ import os
 import re
 from subprocess import Popen as p_open
 from plyer import filechooser
+from AppKit import NSOpenPanel
 
 
 class IP1Window(Screen):
@@ -136,11 +138,25 @@ class IP1Window(Screen):
     def select_folder(self):
         """called when [select folder(s)] button is pressed
         - opens the folder select window
-        - selection is sent to self.selected()"""
-        # Open folder selector window - send selection to self.selected
-        filechooser.choose_dir(
-            on_selection=self.selected, title="Select folder(s)", multiple=True
-        )
+        - selection is sent to self.selected"""
+        if "mac" in platform():
+            # Use NSOpenPanel directly via PyObjC for macOS
+            panel = NSOpenPanel.alloc().init()
+            panel.setCanChooseDirectories_(True)
+            panel.setCanChooseFiles_(False)
+            panel.setAllowsMultipleSelection_(True)
+            
+            if panel.runModal():  # Show dialog and check if user clicked OK
+                selection = list(panel.URLs())
+                paths = [url.path() for url in selection]
+                self.selected(paths)
+        else:
+            # Use plyer for other platforms
+            filechooser.choose_dir(
+                on_selection=self.selected,
+                title="Select folder(s)",
+                multiple=True
+            )
 
     def selected(self, selection):
         """receives selection from selector window
@@ -353,7 +369,7 @@ class IP1JobListBox(Button):
         if file_or_folder == "file":
             # Use the path for the directory containing the file
             # Find last slash
-            s = str(self.file_location).rfind("\\") + 1
+            s = str(self.file_location).rfind("/") + 1
             # E.g. 'C:\Desktop\folder\'
             path = str(self.file_location)[:s]
         elif file_or_folder == "folder":

@@ -965,7 +965,7 @@ class FG2JobListBox(Button):
         if file_or_folder == "file":
             # Use the path for the directory containing the file
             # Find last slash
-            s = str(self.file_location).rfind("\\") + 1
+            s = str(self.file_location).rfind("/") + 1
             # E.g. 'C:\Desktop\folder\'
             path = str(self.file_location)[:s]
         elif file_or_folder == "folder":

@@ -48,7 +48,7 @@ def resource_path(relative_path):
     # if this file doesn't exist
     if not os.path.exists(new_path):
         # remove the resources folder part
-        substring = "resources\\"
+        substring = "resources/"
         str_list = new_path.split(substring)
         new_path = "".join(str_list)
     return new_path
@@ -69,7 +69,7 @@ def class_resource_path(self, relative_path):
     # if this file doesn't exist
     if not os.path.exists(new_path):
         # remove the resources folder part
-        substring = "resources\\"
+        substring = "resources/"
         str_list = new_path.split(substring)
         new_path = "".join(str_list)
     return new_path
@@ -189,7 +189,7 @@ def images_from_folder(folder_location):
     # Sort the files (in order of name)
     top_image_files = natural_sort(top_image_files)
     # Join to the folder locations
-    top_image_file_locs = [folder_location + "\\" + file for file in top_image_files]
+    top_image_file_locs = [folder_location + "/" + file for file in top_image_files]
     return top_image_file_locs, top_image_type
 
 
@@ -232,11 +232,11 @@ def file_name(file_location):
         # Remove that part ownwards
         file_location = file_location[:date_end_index]
         # Get the file name
-        s = str(file_location).rfind("\\") + 1
+        s = str(file_location).rfind("/") + 1
         name = str(file_location)[s:]
     else:
         # Get the file name
-        s = str(file_location).rfind("\\") + 1
+        s = str(file_location).rfind("/") + 1
         name = str(file_location)[s:-4]
     # Remove space characters
     name = name.replace(" ", "")
@@ -247,7 +247,7 @@ def folder_name(folder_location):
     """takes a folder location
     - gets the name of the folder
     - e.g. "folder1/folder/filename.txt" -> folder"""
-    s = str(folder_location).rfind("\\") + 1
+    s = str(folder_location).rfind("/") + 1
     folder_name = str(folder_location)[s:]
     # Remove space characters
     folder_name = folder_name.replace(" ", "")
@@ -369,7 +369,7 @@ def rename_file_pos(folder_location, name, updated=False):
     # If this is a new posiiton file, use the _newpos_ tag :)
     tag = "_newpos_" if updated else "_pos_"
     # Join everything together
-    return str(folder_location) + "\\" + str(name) + tag + date_and_time + ".csv"
+    return str(folder_location) + "/" + str(name) + tag + date_and_time + ".csv"
 
 
 def rename_file_force(file_location, name):
@@ -379,7 +379,7 @@ def rename_file_force(file_location, name):
     # Format the date and time as text
     now = datetime.now()
     date_and_time = str(now.strftime("%d-%m-%y_%H-%M"))
-    s = str(file_location).rfind("\\") + 1
+    s = str(file_location).rfind("/") + 1
     # Join everything together
     return str(file_location)[:s] + str(name) + "_forces_" + date_and_time + ".csv"
 
@@ -393,9 +393,9 @@ def rename_file_graph(file_location, name, graph_num):
     now = datetime.now()
     date_and_time = str(now.strftime("%d-%m-%y_%H-%M"))
     # Find last slash
-    s = str(file_location).rfind("\\") + 1
+    s = str(file_location).rfind("/") + 1
     folder = str(file_location)[:s]  # 'C:\Desktop\folder\'
-    new_folder = folder + "plots\\"  # 'C:\Desktop\folder\plots\'
+    new_folder = folder + "plots/"  # 'C:\Desktop\folder\plots\'
     # Check if the directory exists
     if not os.path.exists(new_folder):
         # If it doesn't exist, create it

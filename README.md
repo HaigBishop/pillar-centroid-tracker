@@ -1,4 +1,4 @@
-# Pillar Centroid Tracker (version 1.0.4)
+# Pillar Centroid Tracker (version 1.1.1)
 (note: in September 2024 this repo was copied from https://eng-git.canterbury.ac.nz/hbi34/pillar-centroid-tracker)
 
 ## Description:
