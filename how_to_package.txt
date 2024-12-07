@@ -18,6 +18,7 @@ pip freeze > requirements.txt
 
 
 # MAKE MacOS PACKAGE ------------------
+(from tutorial: https://github.com/kivy/kivy-sdk-packager/tree/master/osx)
 
 git clone https://github.com/HaigBishop/pillar-centroid-tracker.git
 
@@ -25,27 +26,45 @@ git clone https://github.com/kivy/kivy-sdk-packager.git
 
 cd kivy-sdk-packager/osx
 
-(copy requirements.txt into dir)
-
 pip install -r requirements.txt
 
-curl -O -L https://xxx/Kivy-xxx.dmg
-hdiutil attach Kivy-xxx.dmg -mountroot .
+(find link for .dmg at https://github.com/kivy/kivy/releases)
+
+curl -O -L https://github.com/kivy/kivy/releases/download/2.3.0/Kivy.dmg
+hdiutil attach Kivy.dmg -mountroot .
 
 cp -R Kivy/Kivy.app PCT.app
 
-./create-osx-bundle.sh PCT.app -n PCT -v "1.1.0" -a "Haig Bishop" -i "/Users/haig/Documents/pillar-centroid-tracker/resources/icon.incs"
+./fix-bundle-metadata.sh PCT.app -n PCT -v "1.1.1" -a "Haig Bishop" -i "/Users/haig/Documents/pillar-centroid-tracker/resources/icon_1024.png"
+
+cp ../../pillar-centroid-tracker/requirements.txt ./my-app-requirements.txt
 
 python prepare-wheels.py --requirements-file my-app-requirements.txt --output-folder my-app-wheels
 
-pushd PCT.app/Contents/Resources/PCT_venv/bin
+pushd PCT.app/Contents/Resources/venv/bin
 source activate
 popd
+
+# May be needed:
+pip install --upgrade pip setuptools wheel
+
+# May be needed:
+pip install --upgrade certifi
+export SSL_CERT_FILE=$(python -m certifi)
+
+# May be needed:
+brew install gcc
+
+# May be needed:
+brew install pkg-config openblas
+export LDFLAGS="-L/opt/homebrew/opt/openblas/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/openblas/include"
+export PKG_CONFIG_PATH="/opt/homebrew/opt/openblas/lib/pkgconfig"
 
 SITE_PACKAGES_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
 pip install --platform macosx_11_0_universal2 --find-links=./my-app-wheels --no-deps --target $SITE_PACKAGES_DIR -r my-app-requirements.txt
 
-./cleanup-app.sh MyApp.app
+./cleanup-app.sh PCT.app
 
 pushd PCT.app/Contents/Resources/
 ln -s ./PCT_venv/bin/PCT PCT
