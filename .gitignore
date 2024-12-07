@@ -1,2 +1,4 @@
 PCT_py_venv/
 __pycache__/
+.DS_Store
+*.pyc

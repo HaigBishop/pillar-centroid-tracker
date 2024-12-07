@@ -12,10 +12,9 @@ Version Description:
 - MacOS compatibility (may have broken Windows.. oopsie daisy)
 """
 
-# Import os and sys
-import os
 
 # Stops debug messages (to prevent issues when packaging as .exe or .dmg)
+# import os
 # os.environ["KIVY_NO_CONSOLELOG"] = "1"
 
 # Import kivy and make sure that the version is at least 2.2.0
