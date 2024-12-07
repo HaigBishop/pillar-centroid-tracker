@@ -21,6 +21,9 @@ pip freeze > requirements.txt
 
 (from tutorial: https://github.com/kivy/kivy-sdk-packager/tree/master/osx)
 
+# May be needed:
+brew install python@3.10
+
 git clone https://github.com/HaigBishop/pillar-centroid-tracker.git
 
 git clone https://github.com/kivy/kivy-sdk-packager.git
@@ -39,7 +42,19 @@ hdiutil attach Kivy.dmg -mountroot .
 
 cp -R Kivy/Kivy.app PCT.app
 
+rm -rf PCT.app/Contents/Resources/venv
+python3.10 -m venv PCT.app/Contents/Resources/venv
+source PCT.app/Contents/Resources/venv/bin/activate
+
+# May be needed:
+pip install --upgrade pip setuptools wheel
+
+# May be needed:
+pip install delocate distlib
+
 ./fix-bundle-metadata.sh PCT.app -n PCT -v "1.1.1" -a "Haig Bishop" -i "/Users/haig/Documents/pillar-centroid-tracker/resources/icon.icns"
+
+cp -R ../../pillar-centroid-tracker PCT.app/Contents/Resources/
 
 cp ../../pillar-centroid-tracker/requirements.txt ./my-app-requirements.txt
 
@@ -48,9 +63,6 @@ python prepare-wheels.py --requirements-file my-app-requirements.txt --output-fo
 pushd PCT.app/Contents/Resources/venv/bin
 source activate
 popd
-
-# May be needed:
-pip install --upgrade pip setuptools wheel
 
 # May be needed:
 pip install --upgrade certifi
@@ -68,7 +80,7 @@ export PKG_CONFIG_PATH="/opt/homebrew/opt/openblas/lib/pkgconfig"
 cat > PCT.app/Contents/Resources/script <<EOF
 #!/usr/bin/env bash
 DIR="\$(cd "\$(dirname "\${BASH_SOURCE[0]}")" && pwd)"
-"\$DIR/python" "../../pillar-centroid-tracker/pillar_centroid_tracker.py"
+"\$DIR/venv/bin/python" "\$DIR/pillar-centroid-tracker/pillar_centroid_tracker.py"
 EOF
 chmod +x PCT.app/Contents/Resources/script
 
@@ -82,4 +94,5 @@ ln -sf ./venv/bin/python yourapp
 popd
 
 ./relocate.sh PCT.app
+
 ./create-osx-dmg.sh PCT.app PCT
