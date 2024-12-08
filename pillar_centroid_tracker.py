@@ -13,9 +13,9 @@ Version Description:
 """
 
 
-# Stops debug messages (to prevent issues when packaging as .exe or .dmg)
-import os
-os.environ["KIVY_NO_CONSOLELOG"] = "1"
+# Stops debug messages (to prevent issues when packaging as .exe (but not .dmg)
+# import os
+# os.environ["KIVY_NO_CONSOLELOG"] = "1"
 
 # Import kivy and make sure that the version is at least 2.2.0
 import kivy
@@ -106,6 +106,9 @@ DEFAULT_TITLES = {
     ("x_t", 8): "Time [sec]",
     ("y_t", 8): "Δ Force [µN]",
 }
+
+
+
 # Info page text
 INFO_FILE_POS = resource_path("resources/info_page_text.txt")
 

@@ -35,7 +35,7 @@ export PATH=$(echo $PATH | sed 's|$HOME/miniconda/bin:||g')
 
 pip install -r requirements.txt
 
-(find link for .dmg at https://github.com/kivy/kivy/releases)
+# (find link for .dmg at https://github.com/kivy/kivy/releases)
 
 curl -O -L https://github.com/kivy/kivy/releases/download/2.3.0/Kivy.dmg
 hdiutil attach Kivy.dmg -mountroot .
@@ -67,9 +67,6 @@ popd
 # May be needed:
 pip install --upgrade certifi
 export SSL_CERT_FILE=$(python -m certifi)
-
-# May be needed:
-brew install gcc
 
 # May be needed:
 brew install pkg-config openblas

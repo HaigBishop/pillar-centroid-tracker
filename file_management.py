@@ -12,6 +12,7 @@ import csv
 from cv2 import imread
 import xml.etree.ElementTree as et
 from chardet import detect
+from platform import platform
 import os
 import sys
 import re
@@ -34,45 +35,23 @@ def natural_sort(file_list):
 
     return sorted(file_list, key=natural_keys)
 
-
 def resource_path(relative_path):
-    """takes the relative path to a file/folder, returns the absolute path
-    - works for pure python execution and for the executable file"""
-    try:
-        # PyInstaller creates a temp folder and stores path in _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = APPLICATION_PATH
-    # Join the application path to the "base path"
-    new_path = os.path.join(base_path, relative_path)
-    # if this file doesn't exist
-    if not os.path.exists(new_path):
-        # remove the resources folder part
-        substring = "resources/"
-        str_list = new_path.split(substring)
-        new_path = "".join(str_list)
-    return new_path
-
+    plat = platform()
+    if 'mac' in plat:
+        # On macOS, assume files are alongside this script inside the app bundle
+        base_path = os.path.dirname(os.path.abspath(__file__))
+        return os.path.join(base_path, relative_path)
+    else:
+        # On Windows (or other), fallback to current logic
+        try:
+            base_path = sys._MEIPASS
+        except:
+            base_path = os.path.abspath(".")
+        return os.path.join(base_path, relative_path)
 
 def class_resource_path(self, relative_path):
-    """takes the relative path to a file/folder, returns the absolute path
-    - this function is the same as resource path, but it is
-    for classes because class methods need the self parameter
-    - works for pure python execution and for the executable file"""
-    try:
-        # PyInstaller creates a temp folder and stores path in _MEIPASS
-        base_path = sys._MEIPASS
-    except Exception:
-        base_path = APPLICATION_PATH
-    # Join the application path to the "base path"
-    new_path = os.path.join(base_path, relative_path)
-    # if this file doesn't exist
-    if not os.path.exists(new_path):
-        # remove the resources folder part
-        substring = "resources/"
-        str_list = new_path.split(substring)
-        new_path = "".join(str_list)
-    return new_path
+    # Just wrap resource_path so it can be used in class methods
+    return resource_path(relative_path)
 
 
 def is_valid_folder(folder_loc):
