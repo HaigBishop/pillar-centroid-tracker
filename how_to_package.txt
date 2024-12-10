@@ -147,6 +147,38 @@ buildozer --verbose osx debug
 export PATH="/opt/homebrew/opt/python@3.10/bin:$PATH"
 hash -r
 python3 --version
+
 cd ~/Documents
-git clone <your_repo_url> pillar-centroid-tracker-build
+git clone https://github.com/HaigBishop/pillar-centroid-tracker.git pillar-centroid-tracker-build
 cd pillar-centroid-tracker-build
+
+python3 -m pip install --upgrade Cython==0.29.33 virtualenv buildozer
+
+buildozer init
+
+# (edit the buildozer.spec file)
+
+buildozer --verbose osx debug
+
+
+
+
+
+
+PYINSTALLER:
+cd ~/Documents
+git clone https://github.com/HaigBishop/pillar-centroid-tracker.git
+cd pillar-centroid-tracker
+python3 -m venv venv
+source venv/bin/activate
+
+pip install --upgrade pip setuptools wheel
+pip install "kivy==2.3.0" pyinstaller
+# If you need other packages from your previous requirements, install them now:
+pip install certifi chardet charset-normalizer contourpy cycler docutils fonttools idna imageio joblib kivy-garden kiwisolver matplotlib numpy opencv-python packaging pillow plyer pygments pyobjc-core pyobjc-framework-cocoa pyparsing python-dateutil requests scikit-learn scipy six threadpoolctl urllib3
+
+(make sure the pillar_centroid_tracker.spec file is good to go)
+
+pyinstaller pillar_centroid_tracker.spec
+
+open dist/pillar_centroid_tracker.app
