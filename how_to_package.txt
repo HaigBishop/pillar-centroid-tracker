@@ -84,7 +84,17 @@ chmod +x PCT.app/Contents/Resources/script
 SITE_PACKAGES_DIR=$(python -c "import site; print(site.getsitepackages()[0])")
 pip install --platform macosx_11_0_universal2 --find-links=./my-app-wheels --no-deps --target $SITE_PACKAGES_DIR -r my-app-requirements.txt
 
+# May be needed:
+rm -rf PCT.app/Contents/Resources/pillar-centroid-tracker/.git
+xattr -cr PCT.app
+
 ./cleanup-app.sh PCT.app
+
+# Ensure we have certificates (https://developer.apple.com/account/resources/certificates/)
+
+codesign --sign "Developer ID Application: Haig Bishop (6LR2726467)" --deep --force --verbose PCT.app
+
+codesign --verify --deep --strict --verbose=2 PCT.app
 
 pushd PCT.app/Contents/Resources/
 ln -sf ./venv/bin/python yourapp
@@ -92,4 +102,51 @@ popd
 
 ./relocate.sh PCT.app
 
+zip -r PCT.zip PCT.app
+xcrun altool --notarize-app --primary-bundle-id "science.haig.pct" --username "your-apple-id" --password "app-specific-password" --file PCT.zip
+xcrun stapler staple PCT.app
+
 ./create-osx-dmg.sh PCT.app PCT
+
+
+
+
+
+==========
+
+
+export PATH="/opt/homebrew/opt/python@3.10/bin:$PATH"
+hash -r
+
+python3 --version
+
+cd ~/Documents/pillar-centroid-tracker
+
+python3 -m venv venv
+source venv/bin/activate
+
+python --version
+
+pip install --upgrade pip
+pip install --upgrade pip setuptools
+pip install --upgrade buildozer
+pip install Cython==0.29.33 virtualenv
+
+buildozer init
+
+# (edit the buildozer.spec file)
+
+buildozer --verbose osx debug
+
+
+
+
+
+
+
+export PATH="/opt/homebrew/opt/python@3.10/bin:$PATH"
+hash -r
+python3 --version
+cd ~/Documents
+git clone <your_repo_url> pillar-centroid-tracker-build
+cd pillar-centroid-tracker-build
