@@ -5,26 +5,25 @@ block_cipher = None
 from kivy.tools.packaging.pyinstaller_hooks import get_deps_all, hookspath, runtime_hooks
 from PyInstaller.utils.hooks import collect_submodules
 
-# Path to your main application script
 app_script = 'pillar_centroid_tracker.py'
 
-# Include all files from 'resources' directory
-datas = [
+# Additional data to include
+extra_datas = [
     ('resources/*', 'resources')
 ]
 
-# Gather Kivy dependencies and hooks
-hiddenimports = collect_submodules('kivy_deps')
+# Get Kivy dependencies
+deps = get_deps_all()  # returns dict with keys: binaries, datas, hiddenimports
+# Add our extra data to the existing datas from get_deps_all()
+deps['datas'] += extra_datas
+
+# If you want extra hidden imports, do that as well
+deps['hiddenimports'] += collect_submodules('kivy_deps')
 
 a = Analysis(
     [app_script],
     pathex=['.'],
-    binaries=None,
-    datas=datas,
-    hiddenimports=hiddenimports,
-    hookspath=hookspath(),
-    runtime_hooks=runtime_hooks(),
-    **get_deps_all()
+    **deps
 )
 
 pyz = PYZ(a.pure, a.zipped_data, cipher=block_cipher)
@@ -53,6 +52,6 @@ coll = COLLECT(
 app = BUNDLE(
     coll,
     name='pillar_centroid_tracker.app',
-    icon='resources/icon.icns',   # Adjust if you prefer a different icon
+    icon='resources/icon.icns',
     bundle_identifier='org.haig.pillarcentroidtracker'
 )

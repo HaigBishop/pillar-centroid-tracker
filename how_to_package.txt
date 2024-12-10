@@ -166,7 +166,15 @@ buildozer --verbose osx debug
 
 
 PYINSTALLER:
-cd ~/Documents
+
+export PATH=$(echo $PATH | sed 's|$HOME/miniconda/bin:||g')
+export PATH="/opt/homebrew/opt/python@3.10/bin:$PATH"
+hash -r
+python3 --version
+
+rm -rf ~/Documents/pillar-centroid-tracker-pyinstaller
+mkdir -p ~/Documents/pillar-centroid-tracker-pyinstaller
+cd ~/Documents/pillar-centroid-tracker-pyinstaller
 git clone https://github.com/HaigBishop/pillar-centroid-tracker.git
 cd pillar-centroid-tracker
 python3 -m venv venv
@@ -176,6 +184,7 @@ pip install --upgrade pip setuptools wheel
 pip install "kivy==2.3.0" pyinstaller
 # If you need other packages from your previous requirements, install them now:
 pip install certifi chardet charset-normalizer contourpy cycler docutils fonttools idna imageio joblib kivy-garden kiwisolver matplotlib numpy opencv-python packaging pillow plyer pygments pyobjc-core pyobjc-framework-cocoa pyparsing python-dateutil requests scikit-learn scipy six threadpoolctl urllib3
+pip install kivy plyer numpy opencv-python scikit-learn matplotlib imageio pillow chardet pyobjc-framework-Cocoa
 
 (make sure the pillar_centroid_tracker.spec file is good to go)
 
