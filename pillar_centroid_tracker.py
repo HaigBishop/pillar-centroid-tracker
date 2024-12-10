@@ -117,11 +117,15 @@ class WindowManager(ScreenManager):
     """Screen manager class"""
 
     def __init__(self, **kwargs):
-        """The init method for the screen manager"""
+        """The init met
+        # Create and set up the ScreenManager
+        screen_manager = WindowManager()
+        # Add screens to the ScreenManager
+        screen_manager.add_widget(MainWindow(name="Main"))hod for the screen manager"""
         # Set a transition object so it can be referenced
         self.transition = SlideTransition()
         # Call ScreenManager init method
-        super(ScreenManager, self).__init__(**kwargs)
+        super(WindowManager, self).__init__(**kwargs)
         # Bind key strokes to methods
         Window.bind(on_key_down=self.on_key_down, on_key_up=self.on_key_up)
         # Save a reference to the app object

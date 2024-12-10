@@ -186,7 +186,7 @@ pip install "kivy==2.3.0" pyinstaller
 pip install certifi chardet charset-normalizer contourpy cycler docutils fonttools idna imageio joblib kivy-garden kiwisolver matplotlib numpy opencv-python packaging pillow plyer pygments pyobjc-core pyobjc-framework-cocoa pyparsing python-dateutil requests scikit-learn scipy six threadpoolctl urllib3
 pip install kivy plyer numpy opencv-python scikit-learn matplotlib imageio pillow chardet pyobjc-framework-Cocoa
 
-(make sure the pillar_centroid_tracker.spec file is good to go)
+# (make sure the pillar_centroid_tracker.spec file is good to go)
 
 pyinstaller pillar_centroid_tracker.spec
 
