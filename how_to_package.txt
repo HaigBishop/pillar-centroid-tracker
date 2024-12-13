@@ -49,7 +49,24 @@ pyinstaller pillar_centroid_tracker.spec
 
 # open dist/pillar_centroid_tracker.app
 
-codesign --deep --force --verbose --sign "Developer ID Application: Haig Bishop (6LR2726467)" dist/pillar_centroid_tracker.app
+find dist/pillar_centroid_tracker.app/Contents/Frameworks -type f -name "*.dylib" -exec codesign --force --sign "Developer ID Application: Haig Bishop (6LR2726467)" --options runtime --timestamp {} \;
+
+# Find and sign dylibs in these __dot__dylibs directories
+find dist/pillar_centroid_tracker.app/Contents/Frameworks/cv2/__dot__dylibs -type f -name "*.dylib" -exec codesign --force --sign "Developer ID Application: Haig Bishop (6LR2726467)" --options runtime --timestamp {} \;
+
+find dist/pillar_centroid_tracker.app/Contents/Frameworks/kivy/__dot__dylibs -type f -name "*.dylib" -exec codesign --force --sign "Developer ID Application: Haig Bishop (6LR2726467)" --options runtime --timestamp {} \;
+
+find dist/pillar_centroid_tracker.app/Contents/Frameworks/PIL/__dot__dylibs -type f -name "*.dylib" -exec codesign --force --sign "Developer ID Application: Haig Bishop (6LR2726467)" --options runtime --timestamp {} \;
+
+find dist/pillar_centroid_tracker.app/Contents/Frameworks/sklearn/__dot__dylibs -type f -name "*.dylib" -exec codesign --force --sign "Developer ID Application: Haig Bishop (6LR2726467)" --options runtime --timestamp {} \;
+
+find dist/pillar_centroid_tracker.app/Contents/Frameworks/scipy/__dot__dylibs -type f -name "*.dylib" -exec codesign --force --sign "Developer ID Application: Haig Bishop (6LR2726467)" --options runtime --timestamp {} \;
+
+codesign --deep --force --verbose \
+  --sign "Developer ID Application: Haig Bishop (6LR2726467)" \
+  --options runtime \
+  --timestamp \
+  dist/pillar_centroid_tracker.app
 
 codesign --verify --deep --strict --verbose=2 dist/pillar_centroid_tracker.app
 
