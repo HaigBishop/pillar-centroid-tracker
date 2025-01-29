@@ -165,7 +165,6 @@ There are also some images, fonts, a .kv file and a .txt file.
 MIT License
 (see LICENSE.md)
 
-
 ## How to Site PCT
 
 DOI: https://doi.org/10.5281/zenodo.8042121
@@ -174,7 +173,7 @@ DOI: https://doi.org/10.5281/zenodo.8042121
 
 Please feel free to contact me if you have any questions, feedback, or requests
   -  Author:         Haig Bishop
-  -  Email:          hbi34@uclive.ac.nz
+  -  Email:          haig.bishop@pg.canterbury.ac.nz
   -  Organisation:   University of Canterbury, New Zealand
 
 A big thank you to Ashley Garrill, Volker Nock, and Ayelen Tayagui at UC for supporting this project!
