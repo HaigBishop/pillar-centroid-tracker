@@ -1,5 +1,4 @@
 # Pillar Centroid Tracker (version 1.1.1)
-(note: in September 2024 this repo was copied from https://eng-git.canterbury.ac.nz/hbi34/pillar-centroid-tracker)
 
 ## Description:
 
@@ -20,6 +19,7 @@ is to be used alongside the elastomeric micropillar platform as described in:
     installed on the machine, however the .exe file will only run on the Windows OS.
     Also, the .exe file is rather large due to the dependencies.
 
+(note: in September 2024 this repo was copied from https://eng-git.canterbury.ac.nz/hbi34/pillar-centroid-tracker)
 
 ## Dependencies
 
