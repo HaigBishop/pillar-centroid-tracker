@@ -25,12 +25,13 @@ is to be used alongside the elastomeric micropillar platform as described in:
 
 - The application was written using Python 3.11.3
 - The following Python packages are used by the application
-    | PACKAGE NAME  | VERSION     | PURPOSE
-    | Kivy          | 2.2.0       | GUI
-    | opencv-python | 4.7.0.72    | Computer Vision
-    | matplotlib    | 3.7.1       | Plot generation
-    | imageio       | 2.30.0      | File Handling
-    | pyler         | 2.1.0       | File Handling
+| PACKAGE NAME  | VERSION     | PURPOSE          |
+|---------------|-------------|------------------|
+| Kivy          | 2.2.0       | GUI              |
+| opencv-python | 4.7.0.72    | Computer Vision  |
+| matplotlib    | 3.7.1       | Plot generation  |
+| imageio       | 2.30.0      | File Handling    |
+| pyler         | 2.1.0       | File Handling    |
 
 
 ## Usage
