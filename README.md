@@ -25,6 +25,7 @@ is to be used alongside the elastomeric micropillar platform as described in:
 
 - The application was written using Python 3.11.3
 - The following Python packages are used by the application
+
 | PACKAGE NAME  | VERSION     | PURPOSE          |
 |---------------|-------------|------------------|
 | Kivy          | 2.2.0       | GUI              |
